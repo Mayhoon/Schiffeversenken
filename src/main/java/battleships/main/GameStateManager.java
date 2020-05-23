@@ -2,11 +2,14 @@ package battleships.main;
 
 import battleships.console.Input;
 import battleships.console.Output;
+import battleships.enums.HitType;
 import battleships.enums.NetworkType;
+import battleships.etc.Strings;
 import battleships.network.Data;
 import battleships.network.Network;
+import battleships.ships.Field;
 import battleships.ships.Fleet;
-import com.sun.tools.classfile.ConstantPool;
+import battleships.ships.Ship;
 
 import java.util.Scanner;
 
@@ -33,16 +36,47 @@ public class GameStateManager {
         //Connect to opponent and send fleet data
         startGame();
 
-        while (! network.opponent().isDone) {
+        while (!network.opponent().isDone) {
             shoot();
         }
     }
 
     private void shoot() {
-        //Input coord
-        if( playerData.fleet.isOccupied(0, 0)) {
-            //erhoehe score
+        //Input coordinates
+        System.out.println("Select x position:");
+        int x = scanner.nextInt();
+        System.out.println("Select y position");
+        int y = scanner.nextInt();
+
+        final Ship.ShotInformation hitInfo;
+
+        //Check Hit - Calculate Score - Check if won
+        if (playerData.fleet.isOccupied(x, y)) {
+            playerData.fleet.getFleet().forEach((ship) -> hitInfo = ship.isHit(new Field(x, y)));
+
+            if (hitInfo.hitType == HitType.ALREADY_HIT) {
+                System.out.println("That position is already hit! (" + hitInfo.field + ")");
+                shoot();
+                return;
+            } else if (hitInfo.hitType == HitType.MISS) {
+                System.out.println("Miss at " + hitInfo.field);
+            } else {
+                System.out.println("Hit at" + hitInfo.field);
+
+                playerData.score += hitInfo.awardedScore;
+
+                if (playerData.fleet.allShipsDestroyed()) {
+                    System.out.println("Won with score: " + hitInfo.awardedScore);
+                    System.out.println("Enemy score: " + network.opponent().score);
+                    System.out.println(Strings.CREDITS);
+                    System.exit(0);
+                }
+            }
         }
+
+        //End turn
+        playerData.isDone = true;
+        network.sendData(playerData);
     }
 
     private void connect() {

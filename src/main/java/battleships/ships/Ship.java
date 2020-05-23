@@ -80,19 +80,23 @@ public class Ship {
 
     // Methods
     // Determine Hit
-    public HitType isHit(Field position) {
+    public ShotInformation isHit(Field position) {
+        Field field = position;
         for (Field f : occupiedCoordinates) {
             if (f == position) {
                 if (!hitCoordinates.contains(f)) {
                     hitCoordinates.add(f);
-                    this.isDestroyed();
-                    return HitType.SUCCESS;
+                    ShotInformation returnInfo = new ShotInformation(HitType.SUCCESS, 0, f, this);
+                    if (this.isDestroyed()) {
+                        returnInfo.awardedScore = this.score;
+                    }
+                    return returnInfo;
                 } else {
-                    return HitType.ALREADY_HIT;
+                    return new ShotInformation(HitType.ALREADY_HIT, 0, f, this);
                 }
             }
         }
-        return HitType.MISS;
+        return new ShotInformation(HitType.MISS, 0, position, null);
     }
 
     // Set Coordinates
@@ -155,5 +159,15 @@ public class Ship {
             return true;
         }
         return false;
+    }
+
+    public class ShotInformation {
+        public HitType hitType;
+        public int awardedScore;
+        public Field field;
+        public Ship ship;
+
+        public ShotInformation(HitType hitType, int score, Field field, Ship ship) {
+        }
     }
 }

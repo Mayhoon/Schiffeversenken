@@ -3,7 +3,6 @@ package battleships.ships;
 import battleships.console.Color;
 import battleships.console.Input;
 import battleships.etc.Strings;
-import com.sun.org.apache.bcel.internal.generic.IFLE;
 
 import java.util.ArrayList;
 
@@ -44,6 +43,9 @@ public class Fleet {
         }
     }
 
+    public ArrayList<Ship> getFleet() {
+        return fleet;
+    }
 
     public boolean isOccupied(int x, int y) {
         for (int i = 0; i < fleet.size(); i++) {
@@ -60,7 +62,7 @@ public class Fleet {
     }
 
     // Methods
-    private boolean allShipsDestroyed() {
+    public boolean allShipsDestroyed() {
         boolean hasLost = false;
 
         for (Ship ship : fleet) {
