@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+mainClassName = 'battleships.main.Game'
+
+group 'group'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.crykn:kryonet:2.22.6'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'battleships.main.Game'
+        )
+    }
+}
+
+shadowJar {
+    baseName = 'Game'
+    classifier = ''
+    archiveVersion = ''
+}
+
