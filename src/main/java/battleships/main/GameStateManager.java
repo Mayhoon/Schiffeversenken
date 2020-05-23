@@ -6,6 +6,7 @@ import battleships.enums.NetworkType;
 import battleships.network.Data;
 import battleships.network.Network;
 import battleships.ships.Fleet;
+import com.sun.tools.classfile.ConstantPool;
 
 import java.util.Scanner;
 
@@ -31,6 +32,17 @@ public class GameStateManager {
 
         //Connect to opponent and send fleet data
         startGame();
+
+        while (! network.opponent().isDone) {
+            shoot();
+        }
+    }
+
+    private void shoot() {
+        //Input coord
+        if( playerData.fleet.isOccupied(0, 0)) {
+            //erhoehe score
+        }
     }
 
     private void connect() {

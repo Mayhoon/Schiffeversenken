@@ -32,4 +32,3 @@ shadowJar {
     classifier = ''
     archiveVersion = ''
 }
-

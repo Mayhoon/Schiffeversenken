@@ -151,6 +151,9 @@ public class Ship {
 
     // Ship Destroyed Determination
     public boolean isDestroyed() {
-        return this.hitCoordinates.containsAll(this.occupiedCoordinates);
+        if (this.hitCoordinates.containsAll(this.occupiedCoordinates)) {
+            return true;
+        }
+        return false;
     }
 }
