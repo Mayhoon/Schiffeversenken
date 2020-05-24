@@ -23,10 +23,10 @@ public class GameStateManager {
     public GameStateManager() {
         input = new Input();
         network = new Network();
-        connect();
+        playerData = new Data();
 
         //Initialize ships
-        playerData = new Data();
+        connect();
         playerData.fleet = new Fleet(input);
 
         //Render own ships
@@ -81,6 +81,7 @@ public class GameStateManager {
         if (networkType.equals(NetworkType.CLIENT)) {
             input.connectWhenHostReady();
         }
+
         network.connect(networkType);
         network.sendData(playerData);
     }

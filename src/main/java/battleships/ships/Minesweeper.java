@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Minesweeper extends Ship {
     // Constructor
-    public Minesweeper(Field field, boolean horizontal) throws Exception {
+    public Minesweeper(Field field, boolean horizontal) {
         description = "Minesweeper";
         length = 3;
         width = 1;

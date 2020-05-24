@@ -1,6 +1,5 @@
 package battleships.ships;
 
-import battleships.console.Color;
 import battleships.console.Input;
 import battleships.enums.HitType;
 import battleships.etc.Strings;
@@ -21,26 +20,66 @@ public class Fleet {
     }
 
     public void init() {
-        try {
-            fleet = new ArrayList<Ship>();
 
-            System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.CARRIER_DESCRIPTION);
-            fleet.add(new Carrier(input.getPosition(), input.getDirection()).validatePlacementLocation(fleet));
+        fleet = new ArrayList<Ship>();
+        boolean valid = false;
 
-            System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.BATTLESHIP_DESCRIPTION);
-            fleet.add(new Battleship(input.getPosition(), input.getDirection()).validatePlacementLocation(fleet));
+        //Carrier
+        System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.CARRIER_DESCRIPTION);
+        while (!valid) {
+            Carrier carrier = new Carrier(input.getPosition(), input.getDirection());
+            if (carrier.validatePlacementLocation(fleet)) {
+                fleet.add(carrier);
+                valid = true;
+            }
+        }
+        valid = false;
 
-            System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.CRUISER_DESCRIPTION);
-            fleet.add(new Cruiser(input.getPosition(), input.getDirection()).validatePlacementLocation(fleet));
 
-            System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.MINESWEEPER_DESCRIPTION);
-            fleet.add(new Minesweeper(input.getPosition(), input.getDirection()).validatePlacementLocation(fleet));
+        System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.BATTLESHIP_DESCRIPTION);
+        while (!valid) {
+            Battleship battleship = new Battleship(input.getPosition(), input.getDirection());
+            if (battleship.validatePlacementLocation(fleet)) {
+                fleet.add(battleship);
+                valid = true;
+            }
+        }
+        valid = false;
 
-            System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.OIL_PLATFORM_DESCRIPTION);
-            fleet.add(new OilPlatform(input.getPosition(), input.getDirection()).validatePlacementLocation(fleet));
-        } catch (Exception e) {
-            System.out.println(Color.RED + "Wrong input" + Color.RESET);
-            init();
+        System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.CRUISER_DESCRIPTION);
+        while (!valid) {
+            Cruiser cruiser = new Cruiser(input.getPosition(), input.getDirection());
+            if (cruiser.validatePlacementLocation(fleet)) {
+                fleet.add(cruiser);
+                valid = true;
+            }
+        }
+        valid = false;
+
+        System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.MINESWEEPER_DESCRIPTION);
+        while (!valid) {
+            Minesweeper minesweeper = new Minesweeper(input.getPosition(), input.getDirection());
+            if (minesweeper.validatePlacementLocation(fleet)) {
+                fleet.add(minesweeper);
+                valid = true;
+            }
+        }
+        valid = false;
+
+        System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.OIL_PLATFORM_DESCRIPTION);
+        while (!valid) {
+            Field field = input.getPosition();
+            boolean isHorizontal = input.getDirection();
+
+            OilPlatform oilPlatform = new OilPlatform();
+            oilPlatform.setCoordinates(isHorizontal, field);
+
+            if (oilPlatform.validatePlacementLocation(fleet)) {
+                if (oilPlatform.validateOilPlatform(field)) {
+                    fleet.add(oilPlatform);
+                    valid = true;
+                }
+            }
         }
     }
 

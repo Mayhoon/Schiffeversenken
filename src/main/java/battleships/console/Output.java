@@ -1,5 +1,6 @@
 package battleships.console;
 
+import battleships.ships.Field;
 import battleships.ships.Fleet;
 
 public class Output {
@@ -19,7 +20,7 @@ public class Output {
             System.out.print(Color.CYAN + y + "  " + Color.RESET);
             for (int x = 0; x < Battlefield_width; x++) {
 
-                Boolean occupied = fleet.isOccupied(x, y);
+                Boolean occupied = fleet.isOccupied(new Field(x, y));
                 if (occupied == true) {
                     System.out.print("[X] ");
                 } else if (occupied == false) {

@@ -92,7 +92,7 @@ public class Ship {
                         returnInfo.awardedScore = this.score;
                     }
                 } else {
-                    returnInfo =  new ShotInformation(HitType.ALREADY_HIT, 0, f, this);
+                    returnInfo = new ShotInformation(HitType.ALREADY_HIT, 0, f, this);
                 }
             }
         }
@@ -101,11 +101,11 @@ public class Ship {
     }
 
     // Set Coordinates
-    public void setCoordinates(boolean isHorizontal, Field position) throws Exception {
+    public void setCoordinates(boolean isHorizontal, Field position) {
         if (isHorizontal) {
             for (int l = 0; l < length; l++) {
                 if ((position.getX() + length - 1) > 9 || (position.getY()) > 9) {
-                    throw new Exception(OUT_OF_BOUND_EXCEPTION_CAUSE);
+
                 } else {
                     this.occupiedCoordinates.add(new Field(position.getX() + l, position.getY()));
                 }
@@ -113,7 +113,7 @@ public class Ship {
         } else {
             for (int l = 0; l < length; l++) {
                 if ((position.getX()) < 0 || (position.getY() - (length - 1)) < 0) {
-                    throw new Exception(OUT_OF_BOUND_EXCEPTION_CAUSE);
+
                 } else {
                     this.occupiedCoordinates.add(new Field(position.getX(), position.getY() - l));
                 }
@@ -122,23 +122,27 @@ public class Ship {
     }
 
     // Placement Validation - Checks if other ships already use the coordinates
-    public Ship validatePlacementLocation(List<Ship> fleet) throws Exception {
-        List<Field> allShipsCoordinates = new ArrayList<>();
+    public Boolean validatePlacementLocation(ArrayList<Ship> fleet) {
+        ArrayList<Field> allShipsCoordinates = new ArrayList<>();
 
         for (Ship ship : fleet) {
             allShipsCoordinates.addAll(ship.occupiedCoordinates);
         }
 
-        for (Field coordinate : occupiedCoordinates) {
-            if (allShipsCoordinates.contains(coordinate)) {
-                throw new Exception(FIELD_ALREADY_IN_USE_EXCEPTION_CAUSE);
+        for (Field field : allShipsCoordinates) {
+            for (Field occ : occupiedCoordinates) {
+                if (field.getX() == occ.getX() && field.getY() == occ.getY()) {
+                    System.out.println("Koordinaten bereits von einem anderen Schiff belegt");
+                    return false;
+                }
             }
-        }
 
-        return this;
+        }
+        return true;
     }
 
-    public Ship() { }
+    public Ship() {
+    }
 
     // Ship Destroyed Determination
     public boolean isDestroyed() {
