@@ -77,5 +77,6 @@ public class Fleet {
         for (Ship ship : fleet) {
             ship.isHit(new Field(x, y));
         }
+        return isHit(new Field(x, y));
     }
 }
