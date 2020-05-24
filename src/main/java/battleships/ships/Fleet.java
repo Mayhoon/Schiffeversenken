@@ -10,10 +10,6 @@ public class Fleet {
     private ArrayList<Ship> fleet;
     private Input input;
 
-    public Fleet() {
-        fleet = new ArrayList<Ship>();
-    }
-
     public Fleet(Input input) {
         this.input = input;
         init();

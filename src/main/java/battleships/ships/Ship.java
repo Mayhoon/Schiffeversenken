@@ -33,50 +33,9 @@ public class Ship {
     List<Field> hitCoordinates = new ArrayList<>();
 
     // Getter Setter
-    // Length
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int l) {
-        length = l;
-    }
-
-    // Width
-    public int getWidth() {
-        return width;
-    }
-
-    // Alignment
-    public void setHorizontal(boolean horizontal) {
-        isHorizontal = horizontal;
-    }
-
-    public boolean isHorizontal() {
-        return isHorizontal;
-    }
-
-    // Score
-    public int getScore() {
-        return score;
-    }
-
     // Occupied Coordinates
     public List<Field> getOccupiedCoordinates() {
         return occupiedCoordinates;
-    }
-
-    public void setOccupiedCoordinates(List<Field> occupiedCoordinates) {
-        this.occupiedCoordinates = occupiedCoordinates;
-    }
-
-    // Hit Coordinates
-    public List<Field> getHitCoordinates() {
-        return hitCoordinates;
-    }
-
-    public void setHitCoordinates(List<Field> hitCoordinates) {
-        this.hitCoordinates = hitCoordinates;
     }
 
     // Methods

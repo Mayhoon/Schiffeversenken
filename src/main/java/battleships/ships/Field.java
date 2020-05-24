@@ -29,15 +29,6 @@ public class Field {
         this.y = y;
     }
 
-
-    public void setHit(HitType hit) {
-        isHit = hit;
-    }
-
-    public HitType isHit() {
-        return isHit;
-    }
-
     // Constructor
     public Field(int x, int y) {
         this.x = x;
@@ -46,9 +37,5 @@ public class Field {
 
     public Field() {
 
-    }
-
-    public boolean canBeShot() {
-        return isHit != HitType.NOT_SHOT;
     }
 }

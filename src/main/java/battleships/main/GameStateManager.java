@@ -36,11 +36,6 @@ public class GameStateManager {
         output = new Output();
         output.render(playerData.fleet);
 
-        //DEBUG: render Opponent ships
-//        startGame();
-
-        //
-
         if (networkType.equals(NetworkType.HOST)) {
             playerData.turn = true;
             shoot();
@@ -73,7 +68,6 @@ public class GameStateManager {
             if (hitInfo.hitType == HitType.ALREADY_HIT) {
                 System.out.println("That position is already hit! (" + hitInfo.field + ")");
                 shoot();
-                return;
             } else if (hitInfo.hitType == HitType.MISS) {
                 System.out.println("Miss at " + hitInfo.field);
             } else {

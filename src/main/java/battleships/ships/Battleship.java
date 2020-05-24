@@ -9,8 +9,4 @@ public class Battleship extends Ship {
         isHorizontal = horizontal;
         setCoordinates(horizontal, field);
     }
-
-    public Battleship() {
-
-    }
 }

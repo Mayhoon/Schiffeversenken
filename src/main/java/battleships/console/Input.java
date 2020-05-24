@@ -45,6 +45,7 @@ public class Input {
                 }
             } catch (Exception e) {
                 Color.red("Wrong input");
+                break;
             }
         }
         return field;

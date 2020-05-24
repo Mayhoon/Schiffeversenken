@@ -9,8 +9,4 @@ public class Cruiser extends Ship {
         isHorizontal = horizontal;
         setCoordinates(horizontal, field);
     }
-
-    public Cruiser() {
-
-    }
 }

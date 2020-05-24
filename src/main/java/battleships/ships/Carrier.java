@@ -1,10 +1,6 @@
 package battleships.ships;
 
 public class Carrier extends Ship {
-    public Carrier() {
-
-    }
-
     // Constructor
     public Carrier(Field field, boolean horizontal) {
         description = "Carrier";

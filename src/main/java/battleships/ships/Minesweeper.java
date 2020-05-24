@@ -1,8 +1,5 @@
 package battleships.ships;
 
-import java.util.Collections;
-import java.util.List;
-
 public class Minesweeper extends Ship {
     // Constructor
     public Minesweeper(Field field, boolean horizontal) {
@@ -11,9 +8,5 @@ public class Minesweeper extends Ship {
         width = 1;
         isHorizontal = horizontal;
         setCoordinates(horizontal, field);
-    }
-
-    public Minesweeper() {
-
     }
 }
