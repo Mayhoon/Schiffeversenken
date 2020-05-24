@@ -28,14 +28,22 @@ public class Input {
         return horizontal;
     }
 
-    //Todo do not end game if failed
-    public Field getPosition() throws Exception {
-        System.out.println("X position of the ship:");
-        int x = scanner.nextInt();
-        System.out.println("Y position of the ship:");
-        int y = scanner.nextInt();
+    public Field getPosition() {
+        Field field = null;
+        boolean valid = false;
 
-        return validateInput(new Field(x, y));
+        while (!valid) {
+            System.out.println("X position of the ship:");
+            int x = scanner.nextInt();
+            System.out.println("Y position of the ship:");
+            int y = scanner.nextInt();
+
+            field = new Field(x, y);
+            if (validateInput(field)) {
+                valid = true;
+            }
+        }
+        return field;
     }
 
     //Todo: exception handling
@@ -59,7 +67,7 @@ public class Input {
     public boolean startGame() {
         System.out.println("Type start if your opponent is ready.");
         String input = scanner.next();
-        if (input.equals("yes")) {
+        if (input.equals("start")) {
             return true;
         } else {
             return false;
@@ -75,11 +83,12 @@ public class Input {
 
     }
 
-    private Field validateInput(Field field) throws Exception {
+    private Boolean validateInput(Field field) {
         if (field.getX() > 9 || field.getX() < 0 || field.getY() > 9 || field.getY() < 0) {
-            throw new Exception(INVALID_PLACEMENT_RANGE_EXCEPTION_CAUSE);
+            System.out.println(Color.RED + "Input out of bounds" + Color.RESET);
+            return false;
         } else {
-            return field;
+            return true;
         }
     }
 
