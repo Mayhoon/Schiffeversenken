@@ -33,7 +33,7 @@ public class Fleet {
             Carrier carrier = new Carrier(field, isHorizontal);
 
             if (carrier.validatePlacementLocation(fleet)) {
-                if (carrier.validateCoordinates(isHorizontal, field)) {
+                if (!carrier.validateCoordinates(isHorizontal, field)) {
                     fleet.add(carrier);
                     valid = true;
                 }
@@ -50,7 +50,7 @@ public class Fleet {
             Battleship battleship = new Battleship(input.getPosition(), input.getDirection());
 
             if (battleship.validatePlacementLocation(fleet)) {
-                if (battleship.validateCoordinates(isHorizontal, field)) {
+                if (!battleship.validateCoordinates(isHorizontal, field)) {
                     fleet.add(battleship);
                     valid = true;
                 }
@@ -66,7 +66,7 @@ public class Fleet {
             Cruiser cruiser = new Cruiser(input.getPosition(), input.getDirection());
 
             if (cruiser.validatePlacementLocation(fleet)) {
-                if (cruiser.validateCoordinates(isHorizontal, field)) {
+                if (!cruiser.validateCoordinates(isHorizontal, field)) {
                     fleet.add(cruiser);
                     valid = true;
                 }
@@ -82,7 +82,7 @@ public class Fleet {
             Minesweeper minesweeper = new Minesweeper(input.getPosition(), input.getDirection());
 
             if (minesweeper.validatePlacementLocation(fleet)) {
-                if (minesweeper.validateCoordinates(isHorizontal, field)) {
+                if (!minesweeper.validateCoordinates(isHorizontal, field)) {
                     fleet.add(minesweeper);
                     valid = true;
                 }
@@ -99,7 +99,7 @@ public class Fleet {
             oilPlatform.setCoordinates(isHorizontal, field);
 
             if (oilPlatform.validatePlacementLocation(fleet)) {
-                if (oilPlatform.validateOilPlatform(field)) {
+                if (!oilPlatform.validateOilPlatform(field)) {
                     fleet.add(oilPlatform);
                     valid = true;
                 }

@@ -114,7 +114,7 @@ public class Ship {
     }
 
     public boolean validateCoordinates(boolean isHorizontal, Field position) {
-        boolean valid = false;
+        boolean valid = true;
 
         if (isHorizontal) {
             for (int l = 0; l < length; l++) {
