@@ -103,27 +103,26 @@ public class Fleet {
     }
 
     public boolean isOccupied(Field field) {
+        boolean isOccupied = false;
+
         for (int i = 0; i < fleet.size(); i++) {
             for (int c = 0; c < fleet.get(i).getOccupiedCoordinates().size(); c++) {
                 int posY = fleet.get(i).getOccupiedCoordinates().get(c).getY();
                 int posX = fleet.get(i).getOccupiedCoordinates().get(c).getX();
 
                 if (posX == field.getX() && posY == field.getY()) {
-                    return true;
+                    isOccupied = true;
                 }
             }
         }
-        return false;
+        return isOccupied;
     }
 
-    // Methods
     public boolean allShipsDestroyed() {
         boolean hasLost = false;
 
         for (Ship ship : fleet) {
-            if (ship.isDestroyed()) {
-                hasLost = true;
-            } else return false;
+            hasLost = ship.isDestroyed();
         }
         return hasLost;
     }

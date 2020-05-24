@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ship {
-    final String OUT_OF_BOUND_EXCEPTION_CAUSE = "The Ship cannot be placed out of bounds";
-    final String FIELD_ALREADY_IN_USE_EXCEPTION_CAUSE
-            = "The coordinates of your new Ship are already used by another one";
-
     // Description
     String description = "";
 
