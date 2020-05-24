@@ -4,7 +4,7 @@ import battleships.ships.Fleet;
 
 public class Data {
     public Fleet fleet;
-    public boolean isDone = true;
+    public boolean turn = false;
     public int score = 0;
 
     public Data() {

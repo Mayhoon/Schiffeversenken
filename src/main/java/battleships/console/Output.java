@@ -13,8 +13,8 @@ public class Output {
     }
 
     public void render(Fleet fleet) {
-        System.out.println("-----------------Battleships-----------------");
-        System.out.println(Color.GREEN + "    A   B   C   D   E   F   G   H   I   J" + Color.RESET);
+        System.out.println("----------------Battleships----------------");
+        Color.green("    0   1   2   3   4   5   6   7   8   9");
 
         for (int y = 0; y < Battlefield_height; y++) {
             System.out.print(Color.CYAN + y + "  " + Color.RESET);
@@ -30,6 +30,7 @@ public class Output {
             //New Line
             System.out.println("");
         }
+        System.out.println("-------------------------------------------");
     }
 
 

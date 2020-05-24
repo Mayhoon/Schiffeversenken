@@ -1,5 +1,6 @@
 package battleships.ships;
 
+import battleships.console.Color;
 import battleships.enums.HitType;
 
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class Ship {
     }
 
     public boolean validateCoordinates(boolean isHorizontal, Field position) {
-        boolean valid = true;
+        boolean valid = false;
 
         if (isHorizontal) {
             for (int l = 0; l < length; l++) {
@@ -140,7 +141,7 @@ public class Ship {
         for (Field field : allShipsCoordinates) {
             for (Field occ : occupiedCoordinates) {
                 if (field.getX() == occ.getX() && field.getY() == occ.getY()) {
-                    System.out.println("One or more of the designated coordinates are already in use!");
+                    Color.red("One or more of the designated coordinates are already in use!");
                     return false;
                 }
             }

@@ -3,7 +3,6 @@ package battleships.console;
 import battleships.enums.NetworkType;
 import battleships.ships.Field;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Input {
@@ -30,23 +29,22 @@ public class Input {
     }
 
     public Field getPosition() {
-        Field field = null;
+        Field field = new Field();
         boolean valid = false;
 
         while (!valid) {
             try {
                 System.out.println("X position of the ship:");
-                int x = scanner.nextInt();
+                field.setX(scanner.nextInt());
+
                 System.out.println("Y position of the ship:");
-                int y = scanner.nextInt();
-            }catch (Exception e)
-            {
+                field.setY(scanner.nextInt());
 
-            }
-
-            field = new Field(x, y);
-            if (validateInput(field)) {
-                valid = true;
+                if (validateInput(field)) {
+                    valid = true;
+                }
+            } catch (Exception e) {
+                Color.red("Wrong input");
             }
         }
         return field;
@@ -99,7 +97,7 @@ public class Input {
 
     private Boolean validateInput(Field field) {
         if (field.getX() > 9 || field.getX() < 0 || field.getY() > 9 || field.getY() < 0) {
-            System.out.println(Color.RED + "Input out of bounds" + Color.RESET);
+            Color.red("Input out of bounds");
             return false;
         } else {
             return true;

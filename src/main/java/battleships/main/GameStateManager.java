@@ -1,5 +1,6 @@
 package battleships.main;
 
+import battleships.console.Color;
 import battleships.console.Input;
 import battleships.console.Output;
 import battleships.enums.HitType;
@@ -19,6 +20,7 @@ public class GameStateManager {
     private Network network;
     private Output output;
     private Scanner scanner;
+    private NetworkType networkType;
 
     public GameStateManager() {
         input = new Input();
@@ -28,22 +30,41 @@ public class GameStateManager {
         //Initialize ships
         connect();
         playerData.fleet = new Fleet(input);
+        network.sendData(playerData);
 
         //Render own ships
         output = new Output();
         output.render(playerData.fleet);
 
         //DEBUG: render Opponent ships
-        startGame();
+//        startGame();
 
-        while (network.opponent().isDone) {
+        //
+
+        if (networkType.equals(NetworkType.HOST)) {
+            playerData.turn = true;
             shoot();
-            break;
+            network.sendData(playerData);
+        } else {
+            Color.yellow("Waiting for thy enemy...");
+            while (!network.opponent().turn) {
+
+            }
+            output.render(network.opponent().fleet);
+        }
+
+        while (network.opponent().turn) {
+            shoot();
+
+            //End turn
+            playerData.turn = true;
+            network.sendData(playerData);
+            playerData.turn = false;
         }
     }
 
     private void shoot() {
-       Field field = input.getShootCoordinates();
+        Field field = input.getShootCoordinates();
 
         //Check Hit - Calculate Score - Check if won
         if (playerData.fleet.isOccupied(field)) {
@@ -68,15 +89,10 @@ public class GameStateManager {
                 }
             }
         }
-
-        //End turn
-        playerData.isDone = true;
-        network.sendData(playerData);
-        playerData.isDone = false;
     }
 
     private void connect() {
-        NetworkType networkType = input.networkType();
+        networkType = input.networkType();
 
         if (networkType.equals(NetworkType.CLIENT)) {
             input.connectWhenHostReady();

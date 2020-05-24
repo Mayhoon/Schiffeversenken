@@ -20,10 +20,9 @@ public class OilPlatform extends Ship {
         occupiedCoordinates.add(new Field(position.getX() + 1, position.getY()));
         occupiedCoordinates.add(new Field(position.getX(), position.getY() + 1));
         occupiedCoordinates.add(new Field(position.getX() + 1, position.getY() + 1));
-
     }
 
     public boolean validateOilPlatform(Field field) {
-        return (field.getX() + length) > 9 || (field.getY() + length) > 9;
+        return (field.getX() + length) <= 9 || (field.getY() + length) <= 9;
     }
 }
