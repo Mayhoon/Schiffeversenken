@@ -7,6 +7,7 @@ import battleships.enums.NetworkType;
 import battleships.etc.Strings;
 import battleships.network.Data;
 import battleships.network.Network;
+import battleships.ships.Field;
 import battleships.ships.Fleet;
 import battleships.ships.ShotInformation;
 
@@ -32,26 +33,21 @@ public class GameStateManager {
         output = new Output();
         output.render(playerData.fleet);
 
-        //Connect to opponent and send fleet data
+        //DEBUG: render Opponent ships
         startGame();
 
-        while (!network.opponent().isDone) {
+        while (network.opponent().isDone) {
             shoot();
+            break;
         }
     }
 
     private void shoot() {
-        //Input coordinates
-        System.out.println("Select x position:");
-        int x = scanner.nextInt();
-        System.out.println("Select y position");
-        int y = scanner.nextInt();
-
-        final ShotInformation hitInfo;
+       Field field = input.getShootCoordinates();
 
         //Check Hit - Calculate Score - Check if won
-        if (playerData.fleet.isOccupied(x, y)) {
-            hitInfo = playerData.fleet.isHit(x,y);
+        if (playerData.fleet.isOccupied(field)) {
+            ShotInformation hitInfo = playerData.fleet.isHit(field);
 
             if (hitInfo.hitType == HitType.ALREADY_HIT) {
                 System.out.println("That position is already hit! (" + hitInfo.field + ")");
@@ -94,6 +90,7 @@ public class GameStateManager {
         while (!startGame) {
             startGame = input.startGame();
         }
+        System.out.println("DEBUG: Fleet of the opponent");
         output.render(network.opponent().fleet);
     }
 }

@@ -61,7 +61,7 @@ public class Input {
         String input = scanner.next();
         if (input.equals("yes")) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -81,5 +81,14 @@ public class Input {
         } else {
             return field;
         }
+    }
+
+    public Field getShootCoordinates() {
+        System.out.println("Select x position:");
+        int x = scanner.nextInt();
+        System.out.println("Select y position");
+        int y = scanner.nextInt();
+
+        return new Field(x, y);
     }
 }
