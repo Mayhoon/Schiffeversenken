@@ -2,6 +2,7 @@ package battleships.ships;
 
 import battleships.console.Color;
 import battleships.console.Input;
+import battleships.enums.HitType;
 import battleships.etc.Strings;
 
 import java.util.ArrayList;
@@ -47,13 +48,13 @@ public class Fleet {
         return fleet;
     }
 
-    public boolean isOccupied(int x, int y) {
+    public boolean isOccupied(Field field) {
         for (int i = 0; i < fleet.size(); i++) {
             for (int c = 0; c < fleet.get(i).getOccupiedCoordinates().size(); c++) {
                 int posY = fleet.get(i).getOccupiedCoordinates().get(c).getY();
                 int posX = fleet.get(i).getOccupiedCoordinates().get(c).getX();
 
-                if (posX == x && posY == y) {
+                if (posX == field.getX() && posY == field.getY()) {
                     return true;
                 }
             }
@@ -73,10 +74,20 @@ public class Fleet {
         return hasLost;
     }
 
-    public ShotInformation isHit(int x, int y) {
+    public ShotInformation isHit(Field field) {
+        Ship hitShip = null;
+        ShotInformation returnInfo;
+
         for (Ship ship : fleet) {
-            ship.isHit(new Field(x, y));
+            hitShip = ship.findShipOnLocation(field);
         }
-        return isHit(new Field(x, y));
+
+        if (hitShip != null) {
+            returnInfo = hitShip.isHit(field);
+        } else {
+            returnInfo = new ShotInformation(HitType.MISS, 0, field, null);
+        }
+
+        return returnInfo;
     }
 }

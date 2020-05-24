@@ -81,22 +81,23 @@ public class Ship {
     // Methods
     // Determine Hit
     public ShotInformation isHit(Field position) {
-        Field field = position;
+        ShotInformation returnInfo = null;
+
         for (Field f : occupiedCoordinates) {
             if (f == position) {
                 if (!hitCoordinates.contains(f)) {
                     hitCoordinates.add(f);
-                    ShotInformation returnInfo = new ShotInformation(HitType.SUCCESS, 0, f, this);
+                    returnInfo = new ShotInformation(HitType.SUCCESS, 0, f, this);
                     if (this.isDestroyed()) {
                         returnInfo.awardedScore = this.score;
                     }
-                    return returnInfo;
                 } else {
-                    return new ShotInformation(HitType.ALREADY_HIT, 0, f, this);
+                    returnInfo =  new ShotInformation(HitType.ALREADY_HIT, 0, f, this);
                 }
             }
         }
-        return new ShotInformation(HitType.MISS, 0, position, null);
+
+        return returnInfo;
     }
 
     // Set Coordinates
@@ -137,27 +138,24 @@ public class Ship {
         return this;
     }
 
-    public Ship() {
-
-    }
-
-    // Rotate
-    public boolean rotate(boolean isHorizontal) {
-        return !isHorizontal;
-    }
-
-    // Ship Score Determination
-    public int grantScore() {
-        if (this.hitCoordinates.containsAll(this.occupiedCoordinates)) {
-            return this.score;
-        } else return 0;
-    }
+    public Ship() { }
 
     // Ship Destroyed Determination
     public boolean isDestroyed() {
-        if (this.hitCoordinates.containsAll(this.occupiedCoordinates)) {
-            return true;
+        return this.hitCoordinates.containsAll(this.occupiedCoordinates);
+    }
+
+    public Ship findShipOnLocation(Field position) {
+        Ship hitShip = null;
+
+        for (Field p : occupiedCoordinates) {
+            if (p == position) {
+                if (hitCoordinates.contains(p)) {
+                    hitShip = this;
+                }
+            }
         }
-        return false;
+
+        return hitShip;
     }
 }
