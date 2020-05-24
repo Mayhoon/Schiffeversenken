@@ -72,4 +72,10 @@ public class Fleet {
         }
         return hasLost;
     }
+
+    public ShotInformation isHit(int x, int y) {
+        for (Ship ship : fleet) {
+            ship.isHit(new Field(x, y));
+        }
+    }
 }

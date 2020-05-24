@@ -7,9 +7,8 @@ import battleships.enums.NetworkType;
 import battleships.etc.Strings;
 import battleships.network.Data;
 import battleships.network.Network;
-import battleships.ships.Field;
 import battleships.ships.Fleet;
-import battleships.ships.Ship;
+import battleships.ships.ShotInformation;
 
 import java.util.Scanner;
 
@@ -48,11 +47,11 @@ public class GameStateManager {
         System.out.println("Select y position");
         int y = scanner.nextInt();
 
-        final Ship.ShotInformation hitInfo;
+        final ShotInformation hitInfo;
 
         //Check Hit - Calculate Score - Check if won
         if (playerData.fleet.isOccupied(x, y)) {
-            playerData.fleet.getFleet().forEach((ship) -> hitInfo = ship.isHit(new Field(x, y)));
+            hitInfo = playerData.fleet.isHit(x,y);
 
             if (hitInfo.hitType == HitType.ALREADY_HIT) {
                 System.out.println("That position is already hit! (" + hitInfo.field + ")");
@@ -77,6 +76,7 @@ public class GameStateManager {
         //End turn
         playerData.isDone = true;
         network.sendData(playerData);
+        playerData.isDone = false;
     }
 
     private void connect() {
