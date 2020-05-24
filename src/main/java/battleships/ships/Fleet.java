@@ -27,10 +27,16 @@ public class Fleet {
         //Carrier
         System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.CARRIER_DESCRIPTION);
         while (!valid) {
-            Carrier carrier = new Carrier(input.getPosition(), input.getDirection());
+            Field field = input.getPosition();
+            boolean isHorizontal = input.getDirection();
+
+            Carrier carrier = new Carrier(field, isHorizontal);
+
             if (carrier.validatePlacementLocation(fleet)) {
-                fleet.add(carrier);
-                valid = true;
+                if (carrier.validateCoordinates(isHorizontal, field)) {
+                    fleet.add(carrier);
+                    valid = true;
+                }
             }
         }
         valid = false;
@@ -38,30 +44,48 @@ public class Fleet {
 
         System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.BATTLESHIP_DESCRIPTION);
         while (!valid) {
+            Field field = input.getPosition();
+            boolean isHorizontal = input.getDirection();
+
             Battleship battleship = new Battleship(input.getPosition(), input.getDirection());
+
             if (battleship.validatePlacementLocation(fleet)) {
-                fleet.add(battleship);
-                valid = true;
+                if (battleship.validateCoordinates(isHorizontal, field)) {
+                    fleet.add(battleship);
+                    valid = true;
+                }
             }
         }
         valid = false;
 
         System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.CRUISER_DESCRIPTION);
         while (!valid) {
+            Field field = input.getPosition();
+            boolean isHorizontal = input.getDirection();
+
             Cruiser cruiser = new Cruiser(input.getPosition(), input.getDirection());
+
             if (cruiser.validatePlacementLocation(fleet)) {
-                fleet.add(cruiser);
-                valid = true;
+                if (cruiser.validateCoordinates(isHorizontal, field)) {
+                    fleet.add(cruiser);
+                    valid = true;
+                }
             }
         }
         valid = false;
 
         System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.MINESWEEPER_DESCRIPTION);
         while (!valid) {
+            Field field = input.getPosition();
+            boolean isHorizontal = input.getDirection();
+
             Minesweeper minesweeper = new Minesweeper(input.getPosition(), input.getDirection());
+
             if (minesweeper.validatePlacementLocation(fleet)) {
-                fleet.add(minesweeper);
-                valid = true;
+                if (minesweeper.validateCoordinates(isHorizontal, field)) {
+                    fleet.add(minesweeper);
+                    valid = true;
+                }
             }
         }
         valid = false;

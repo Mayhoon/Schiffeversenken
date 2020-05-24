@@ -104,21 +104,29 @@ public class Ship {
     public void setCoordinates(boolean isHorizontal, Field position) {
         if (isHorizontal) {
             for (int l = 0; l < length; l++) {
-                if ((position.getX() + length - 1) > 9 || (position.getY()) > 9) {
-
-                } else {
-                    this.occupiedCoordinates.add(new Field(position.getX() + l, position.getY()));
-                }
+                this.occupiedCoordinates.add(new Field(position.getX() + l, position.getY()));
             }
         } else {
             for (int l = 0; l < length; l++) {
-                if ((position.getX()) < 0 || (position.getY() - (length - 1)) < 0) {
-
-                } else {
-                    this.occupiedCoordinates.add(new Field(position.getX(), position.getY() - l));
-                }
+                this.occupiedCoordinates.add(new Field(position.getX(), position.getY() - l));
             }
         }
+    }
+
+    public boolean validateCoordinates(boolean isHorizontal, Field position) {
+        boolean valid = false;
+
+        if (isHorizontal) {
+            for (int l = 0; l < length; l++) {
+                valid = (position.getX() + length - 1) <= 9 && (position.getY()) <= 9;
+            }
+        } else {
+            for (int l = 0; l < length; l++) {
+                valid = (position.getX()) >= 0 && (position.getY() - (length - 1)) >= 0;
+            }
+        }
+
+        return valid;
     }
 
     // Placement Validation - Checks if other ships already use the coordinates
@@ -132,7 +140,7 @@ public class Ship {
         for (Field field : allShipsCoordinates) {
             for (Field occ : occupiedCoordinates) {
                 if (field.getX() == occ.getX() && field.getY() == occ.getY()) {
-                    System.out.println("Koordinaten bereits von einem anderen Schiff belegt");
+                    System.out.println("One or more of the designated coordinates are already in use!");
                     return false;
                 }
             }

@@ -46,22 +46,28 @@ public class Input {
         return field;
     }
 
-    //Todo: exception handling
     public NetworkType networkType() {
+        boolean valid = false;
+        NetworkType networkType = null;
+
         System.out.println("Are you hosting the game?");
         System.out.println("yes / no");
-        String input = scanner.next();
 
-        switch (input) {
-            case "yes":
-                return NetworkType.HOST;
-            case "no":
-                return NetworkType.CLIENT;
-            default:
-                System.out.println("Wrong input.");
-                System.exit(1);
+        while (!valid) {
+            String input = scanner.next();
+
+            if (input.equals("yes") || input.equals("no")) {
+                switch (input) {
+                    case "yes":
+                        networkType = NetworkType.HOST;
+                    case "no":
+                        networkType = NetworkType.CLIENT;
+                }
+                valid = true;
+            }
         }
-        return null;
+
+        return networkType;
     }
 
     public boolean startGame() {
@@ -93,11 +99,20 @@ public class Input {
     }
 
     public Field getShootCoordinates() {
-        System.out.println("Select x position:");
-        int x = scanner.nextInt();
-        System.out.println("Select y position");
-        int y = scanner.nextInt();
+        Field field = null;
+        boolean valid = false;
 
-        return new Field(x, y);
+        while (!valid) {
+            System.out.println("Select X position:");
+            int x = scanner.nextInt();
+            System.out.println("Select Y position:");
+            int y = scanner.nextInt();
+
+            field = new Field(x, y);
+            if (validateInput(field)) {
+                valid = true;
+            }
+        }
+        return field;
     }
 }
