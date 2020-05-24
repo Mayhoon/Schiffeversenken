@@ -1,5 +1,6 @@
 package battleships.network;
 
+import battleships.console.Color;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -15,6 +16,7 @@ public class KryoServer extends NetworkEntity {
         server = new Server();
         opponent = new Data();
         Kryo kryo = new ClassRegisterer().addClasses(server.getKryo());
+        kryo.setRegistrationRequired(false);
     }
 
     public void start() {
@@ -30,7 +32,7 @@ public class KryoServer extends NetworkEntity {
                 @Override
                 public void received(Connection connection, Object object) {
                     if (object instanceof Data) {
-                        System.out.println("Data recieved");
+                        Color.purple("Data received");
                         opponent = (Data) object;
                     }
                 }
