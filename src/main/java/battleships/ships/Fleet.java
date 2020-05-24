@@ -47,7 +47,7 @@ public class Fleet {
             Field field = input.getPosition();
             boolean isHorizontal = input.getDirection();
 
-            Battleship battleship = new Battleship(input.getPosition(), input.getDirection());
+            Battleship battleship = new Battleship(field, isHorizontal);
 
             if (battleship.validatePlacementLocation(fleet)) {
                 if (battleship.validateCoordinates(isHorizontal, field)) {
@@ -63,7 +63,7 @@ public class Fleet {
             Field field = input.getPosition();
             boolean isHorizontal = input.getDirection();
 
-            Cruiser cruiser = new Cruiser(input.getPosition(), input.getDirection());
+            Cruiser cruiser = new Cruiser(field, isHorizontal);
 
             if (cruiser.validatePlacementLocation(fleet)) {
                 if (cruiser.validateCoordinates(isHorizontal, field)) {
@@ -79,7 +79,7 @@ public class Fleet {
             Field field = input.getPosition();
             boolean isHorizontal = input.getDirection();
 
-            Minesweeper minesweeper = new Minesweeper(input.getPosition(), input.getDirection());
+            Minesweeper minesweeper = new Minesweeper(field, isHorizontal);
 
             if (minesweeper.validatePlacementLocation(fleet)) {
                 if (minesweeper.validateCoordinates(isHorizontal, field)) {
@@ -105,10 +105,6 @@ public class Fleet {
                 }
             }
         }
-    }
-
-    public ArrayList<Ship> getFleet() {
-        return fleet;
     }
 
     public boolean isOccupied(Field field) {

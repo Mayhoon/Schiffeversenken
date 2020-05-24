@@ -3,6 +3,7 @@ package battleships.console;
 import battleships.enums.NetworkType;
 import battleships.ships.Field;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Input {
@@ -33,10 +34,15 @@ public class Input {
         boolean valid = false;
 
         while (!valid) {
-            System.out.println("X position of the ship:");
-            int x = scanner.nextInt();
-            System.out.println("Y position of the ship:");
-            int y = scanner.nextInt();
+            try {
+                System.out.println("X position of the ship:");
+                int x = scanner.nextInt();
+                System.out.println("Y position of the ship:");
+                int y = scanner.nextInt();
+            }catch (Exception e)
+            {
+
+            }
 
             field = new Field(x, y);
             if (validateInput(field)) {
@@ -60,8 +66,10 @@ public class Input {
                 switch (input) {
                     case "yes":
                         networkType = NetworkType.HOST;
+                        break;
                     case "no":
                         networkType = NetworkType.CLIENT;
+                        break;
                 }
                 valid = true;
             }
