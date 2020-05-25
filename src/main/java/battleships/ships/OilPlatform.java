@@ -1,7 +1,7 @@
 package battleships.ships;
 
 public class OilPlatform extends Ship {
-    public OilPlatform(Field field, boolean horizontal) throws Exception {
+    public OilPlatform(Field field, boolean horizontal) {
         description = "Oil Platform";
         length = 2;
         width = 2;

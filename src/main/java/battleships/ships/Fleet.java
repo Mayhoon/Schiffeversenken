@@ -23,82 +23,65 @@ public class Fleet {
         return false;
     }
 
+    public boolean initBattleShip(Field field, boolean isHorizontal) {
+        Battleship battleship = new Battleship(field, isHorizontal);
+
+        if (battleship.validatePlacementLocation(fleet)) {
+            if (battleship.validateCoordinates(isHorizontal, field)) {
+                fleet.add(battleship);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean initCruiser(Field field, boolean isHorizontal) {
+        Cruiser cruiser = new Cruiser(field, isHorizontal);
+
+        if (cruiser.validatePlacementLocation(fleet)) {
+            if (cruiser.validateCoordinates(isHorizontal, field)) {
+                fleet.add(cruiser);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean initMinesweeper(Field field, boolean isHorizontal) {
+        Minesweeper minesweeper = new Minesweeper(field, isHorizontal);
+
+        if (minesweeper.validatePlacementLocation(fleet)) {
+            if (minesweeper.validateCoordinates(isHorizontal, field)) {
+                fleet.add(minesweeper);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean initOilPlatform(Field field, boolean isHorizontal) {
+        OilPlatform oilPlatform = new OilPlatform(field, isHorizontal);
+
+        if (oilPlatform.validatePlacementLocation(fleet)) {
+            if (oilPlatform.validateOilPlatform(field)) {
+                fleet.add(oilPlatform);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void init() {
         fleet = new ArrayList<Ship>();
-//        boolean valid = false;
-
-//        System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.BATTLESHIP_DESCRIPTION);
-//        while (!valid) {
-//            Field field = input.getPosition();
-//            boolean isHorizontal = input.getDirection();
-//
-//            Battleship battleship = new Battleship(field, isHorizontal);
-//
-//            if (battleship.validatePlacementLocation(fleet)) {
-//                if (battleship.validateCoordinates(isHorizontal, field)) {
-//                    fleet.add(battleship);
-//                    valid = true;
-//                }
-//            }
-//        }
-//        valid = false;
-//
-//        System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.CRUISER_DESCRIPTION);
-//        while (!valid) {
-//            Field field = input.getPosition();
-//            boolean isHorizontal = input.getDirection();
-//
-//            Cruiser cruiser = new Cruiser(field, isHorizontal);
-//
-//            if (cruiser.validatePlacementLocation(fleet)) {
-//                if (cruiser.validateCoordinates(isHorizontal, field)) {
-//                    fleet.add(cruiser);
-//                    valid = true;
-//                }
-//            }
-//        }
-//        valid = false;
-//
-//        System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.MINESWEEPER_DESCRIPTION);
-//        while (!valid) {
-//            Field field = input.getPosition();
-//            boolean isHorizontal = input.getDirection();
-//
-//            Minesweeper minesweeper = new Minesweeper(field, isHorizontal);
-//
-//            if (minesweeper.validatePlacementLocation(fleet)) {
-//                if (minesweeper.validateCoordinates(isHorizontal, field)) {
-//                    fleet.add(minesweeper);
-//                    valid = true;
-//                }
-//            }
-//        }
-//        valid = false;
-//
-//        System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.OIL_PLATFORM_DESCRIPTION);
-//        while (!valid) {
-//            Field field = input.getPosition();
-//            boolean isHorizontal = input.getDirection();
-//
-//            OilPlatform oilPlatform = new OilPlatform();
-//            oilPlatform.setCoordinates(isHorizontal, field);
-//
-//            if (oilPlatform.validatePlacementLocation(fleet)) {
-//                if (oilPlatform.validateOilPlatform(field)) {
-//                    fleet.add(oilPlatform);
-//                    valid = true;
-//                }
-//            }
-//        }
     }
 
     public boolean isOccupied(Field field) {
         boolean isOccupied = false;
 
-        for (int i = 0; i < fleet.size(); i++) {
-            for (int c = 0; c < fleet.get(i).getOccupiedCoordinates().size(); c++) {
-                int posY = fleet.get(i).getOccupiedCoordinates().get(c).getY();
-                int posX = fleet.get(i).getOccupiedCoordinates().get(c).getX();
+        for (Ship ship : fleet) {
+            for (int c = 0; c < ship.getOccupiedCoordinates().size(); c++) {
+                int posY = ship.getOccupiedCoordinates().get(c).getY();
+                int posX = ship.getOccupiedCoordinates().get(c).getX();
 
                 if (posX == field.getX() && posY == field.getY()) {
                     isOccupied = true;
