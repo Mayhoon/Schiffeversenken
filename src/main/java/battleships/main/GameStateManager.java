@@ -29,33 +29,33 @@ public class GameStateManager {
 
         //Initialize ships
         connect();
-        playerData.fleet = new Fleet(input);
+        playerData.fleet = new Fleet();
         network.sendData(playerData);
 
         //Render own ships
         output = new Output();
         output.render(playerData.fleet);
 
-        if (networkType.equals(NetworkType.HOST)) {
-            playerData.turn = true;
-            shoot();
-            network.sendData(playerData);
-        } else {
-            Color.yellow("Waiting for thy enemy...");
-            while (!network.opponent().turn) {
-
-            }
-            output.render(network.opponent().fleet);
-        }
-
-        while (network.opponent().turn) {
-            shoot();
-
-            //End turn
-            playerData.turn = true;
-            network.sendData(playerData);
-            playerData.turn = false;
-        }
+//        if (networkType.equals(NetworkType.HOST)) {
+//            playerData.turn = true;
+//            shoot();
+//            network.sendData(playerData);
+//        } else {
+//            Color.yellow("Waiting for thy enemy...");
+//            while (!network.opponent().turn) {
+//
+//            }
+//            output.render(network.opponent().fleet);
+//        }
+//
+//        while (network.opponent().turn) {
+//            shoot();
+//
+//            //End turn
+//            playerData.turn = true;
+//            network.sendData(playerData);
+//            playerData.turn = false;
+//        }
     }
 
     private void shoot() {

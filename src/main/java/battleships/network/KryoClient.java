@@ -16,7 +16,7 @@ public class KryoClient extends NetworkEntity {
         client = new Client();
         opponent = new Data();
         Kryo kryo = new ClassRegisterer().addClasses(client.getKryo());
-        kryo.setRegistrationRequired(false);
+       // kryo.setRegistrationRequired(false);
     }
 
     public void start() {

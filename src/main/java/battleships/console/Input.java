@@ -73,7 +73,6 @@ public class Input {
                 valid = true;
             }
         }
-
         return networkType;
     }
 

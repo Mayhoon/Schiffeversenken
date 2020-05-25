@@ -24,8 +24,8 @@ public class ClassRegisterer {
         kryo.register(OilPlatform.class);
         kryo.register(HitType.class);
         kryo.register(Input.class);
-        kryo.register(Scanner.class);
         kryo.register(Color.class);
+        kryo.register(java.util.Scanner.class);
         return kryo;
     }
 }

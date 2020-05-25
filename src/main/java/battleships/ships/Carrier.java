@@ -9,4 +9,8 @@ public class Carrier extends Ship {
         isHorizontal = horizontal;
         setCoordinates(horizontal, field);
     }
+
+    public Carrier () {
+
+    }
 }

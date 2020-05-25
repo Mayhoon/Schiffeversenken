@@ -1,6 +1,5 @@
 package battleships.ships;
 
-import battleships.console.Input;
 import battleships.enums.HitType;
 import battleships.etc.Strings;
 
@@ -8,10 +7,10 @@ import java.util.ArrayList;
 
 public class Fleet {
     private ArrayList<Ship> fleet;
-    private Input input;
+//    private Input input;
 
-    public Fleet(Input input) {
-        this.input = input;
+    public Fleet() {
+//        this.input = input;
         init();
     }
 
@@ -22,13 +21,13 @@ public class Fleet {
         //Carrier
         System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.CARRIER_DESCRIPTION);
         while (!valid) {
-            Field field = input.getPosition();
-            boolean isHorizontal = input.getDirection();
+//            Field field = input.getPosition();
+//            boolean isHorizontal = input.getDirection();
 
-            Carrier carrier = new Carrier(field, isHorizontal);
+            Carrier carrier = new Carrier(new Field(2, 2), true);
 
             if (carrier.validatePlacementLocation(fleet)) {
-                if (carrier.validateCoordinates(isHorizontal, field)) {
+                if (carrier.validateCoordinates(true, new Field(2, 2))) {
                     fleet.add(carrier);
                     valid = true;
                 }
