@@ -1,40 +1,31 @@
 package battleships.ships;
 
 import battleships.enums.HitType;
-import battleships.etc.Strings;
 
 import java.util.ArrayList;
 
 public class Fleet {
     private ArrayList<Ship> fleet;
-//    private Input input;
 
     public Fleet() {
-//        this.input = input;
         init();
+    }
+
+    public boolean initCarrier(Field field, boolean isHorizontal) {
+        Carrier carrier = new Carrier(field, isHorizontal);
+
+        if (carrier.validatePlacementLocation(fleet)) {
+            if (carrier.validateCoordinates(isHorizontal, field)) {
+                fleet.add(carrier);
+                return true;
+            }
+        }
+        return false;
     }
 
     public void init() {
         fleet = new ArrayList<Ship>();
-        boolean valid = false;
-
-        //Carrier
-        System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.CARRIER_DESCRIPTION);
-        while (!valid) {
-//            Field field = input.getPosition();
-//            boolean isHorizontal = input.getDirection();
-
-            Carrier carrier = new Carrier(new Field(2, 2), true);
-
-            if (carrier.validatePlacementLocation(fleet)) {
-                if (carrier.validateCoordinates(true, new Field(2, 2))) {
-                    fleet.add(carrier);
-                    valid = true;
-                }
-            }
-        }
-        valid = false;
-
+//        boolean valid = false;
 
 //        System.out.println(Strings.SHIP_TO_BE_PLACED + Strings.BATTLESHIP_DESCRIPTION);
 //        while (!valid) {

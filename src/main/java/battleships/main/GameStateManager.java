@@ -1,6 +1,5 @@
 package battleships.main;
 
-import battleships.console.Color;
 import battleships.console.Input;
 import battleships.console.Output;
 import battleships.enums.HitType;
@@ -29,12 +28,18 @@ public class GameStateManager {
 
         //Initialize ships
         connect();
-        playerData.fleet = new Fleet();
+        Fleet fleet = new Fleet();
+        fleet.initCarrier(input.getPosition(), input.getDirection());
+//        fleet.initBattleShip(input.getPosition(), input.getDirection());
+//        fleet.initCruiser(input.getPosition(), input.getDirection());
+//        fleet.initMinesweeper(input.getPosition(), input.getDirection());
+//        fleet.initOilPlatform(input.getPosition(), input.getDirection());
+        playerData.fleet = fleet;
         network.sendData(playerData);
 
         //Render own ships
         output = new Output();
-        output.render(playerData.fleet);
+        output.render(network.opponent().fleet);
 
 //        if (networkType.equals(NetworkType.HOST)) {
 //            playerData.turn = true;
