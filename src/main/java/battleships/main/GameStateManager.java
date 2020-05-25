@@ -28,18 +28,30 @@ public class GameStateManager {
 
         //Initialize ships
         connect();
+        output = new Output();
         Fleet fleet = new Fleet();
         fleet.initCarrier(input.getPosition(), input.getDirection());
+        output.render(fleet);
 //        fleet.initBattleShip(input.getPosition(), input.getDirection());
+//        output.render(fleet);
 //        fleet.initCruiser(input.getPosition(), input.getDirection());
+//        output.render(fleet);
 //        fleet.initMinesweeper(input.getPosition(), input.getDirection());
+//        output.render(fleet);
 //        fleet.initOilPlatform(input.getPosition(), input.getDirection());
+//        output.render(fleet);
+
+        //Send ships to opponent
         playerData.fleet = fleet;
         network.sendData(playerData);
 
-        //Render own ships
-        output = new Output();
-        output.render(network.opponent().fleet);
+        //Render fleet from opponent
+        System.out.println("Did your opponent finish his turn?");
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.next();
+        if(input.equals("yes")){
+            output.render(network.opponent().fleet);
+        }
 
 //        if (networkType.equals(NetworkType.HOST)) {
 //            playerData.turn = true;

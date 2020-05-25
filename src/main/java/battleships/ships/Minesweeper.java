@@ -9,4 +9,8 @@ public class Minesweeper extends Ship {
         isHorizontal = horizontal;
         setCoordinates(horizontal, field);
     }
+
+    public Minesweeper() {
+        
+    }
 }

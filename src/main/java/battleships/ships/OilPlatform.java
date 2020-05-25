@@ -9,6 +9,10 @@ public class OilPlatform extends Ship {
         this.setCoordinates(isHorizontal, field);
     }
 
+    public OilPlatform () {
+
+    }
+
     // Methods
     @Override
     public void setCoordinates(boolean isHorizontal, Field position) {
