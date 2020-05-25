@@ -45,7 +45,7 @@ public class Ship {
                     hitCoordinates.add(f);
                     returnInfo = new ShotInformation(HitType.SUCCESS, 0, f, this);
                     if (this.isDestroyed()) {
-                        returnInfo.awardedScore = this.score;
+                        returnInfo.score = this.score;
                     }
                 } else {
                     returnInfo = new ShotInformation(HitType.ALREADY_HIT, 0, f, this);
@@ -117,13 +117,12 @@ public class Ship {
         Ship hitShip = null;
 
         for (Field p : occupiedCoordinates) {
-            if (p == position) {
+            if (p.getX() == position.getX() && p.getY() == position.getY()) {
                 if (hitCoordinates.contains(p)) {
                     hitShip = this;
                 }
             }
         }
-
         return hitShip;
     }
 }

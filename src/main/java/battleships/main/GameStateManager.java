@@ -1,5 +1,6 @@
 package battleships.main;
 
+import battleships.console.Color;
 import battleships.console.Input;
 import battleships.console.Output;
 import battleships.enums.HitType;
@@ -20,84 +21,74 @@ public class GameStateManager {
     private Output output;
     private Scanner scanner;
     private NetworkType networkType;
+    private Fleet fleet;
 
     public GameStateManager() {
         input = new Input();
         network = new Network();
         playerData = new Data();
 
-        //Initialize ships
-        connect();
-        output = new Output();
-        Fleet fleet = new Fleet();
-        fleet.initCarrier(input.getPosition(), input.getDirection());
-        output.render(fleet);
-//        fleet.initBattleShip(input.getPosition(), input.getDirection());
-//        output.render(fleet);
-//        fleet.initCruiser(input.getPosition(), input.getDirection());
-//        output.render(fleet);
-//        fleet.initMinesweeper(input.getPosition(), input.getDirection());
-//        output.render(fleet);
-//        fleet.initOilPlatform(input.getPosition(), input.getDirection());
-//        output.render(fleet);
+        initializeFleet();
 
         //Send ships to opponent
-        playerData.fleet = fleet;
         network.sendData(playerData);
 
         //Render fleet from opponent
         System.out.println("Did your opponent finish his turn?");
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
-        if(input.equals("yes")){
+        if (input.equals("yes")) {
             output.render(network.opponent().fleet);
+            gameLoop();
         }
+    }
 
-//        if (networkType.equals(NetworkType.HOST)) {
-//            playerData.turn = true;
-//            shoot();
-//            network.sendData(playerData);
-//        } else {
-//            Color.yellow("Waiting for thy enemy...");
-//            while (!network.opponent().turn) {
-//
-//            }
-//            output.render(network.opponent().fleet);
-//        }
-//
-//        while (network.opponent().turn) {
-//            shoot();
-//
-//            //End turn
-//            playerData.turn = true;
-//            network.sendData(playerData);
-//            playerData.turn = false;
-//        }
+    private void gameLoop() {
+        while (network.opponent().turn) {
+
+        }
+        if (network.opponent().hasWon) {
+            Color.yellow("Your Opponent has won with a score of: " + network.opponent().score);
+            Color.green("Your score: " + playerData.score);
+            System.exit(1);
+        } else {
+            shoot();
+            endTurn();
+            gameLoop();
+        }
+    }
+
+    private void endTurn() {
+        network.sendData(playerData);
+        playerData.turn = false;
     }
 
     private void shoot() {
         Field field = input.getShootCoordinates();
+        Fleet opponent = network.opponent().fleet;
 
         //Check Hit - Calculate Score - Check if won
-        if (playerData.fleet.isOccupied(field)) {
-            ShotInformation hitInfo = playerData.fleet.isHit(field);
+        ShotInformation hitInfo = opponent.isHit(field);
 
-            if (hitInfo.hitType == HitType.ALREADY_HIT) {
-                System.out.println("That position is already hit! (" + hitInfo.field + ")");
-                shoot();
-            } else if (hitInfo.hitType == HitType.MISS) {
-                System.out.println("Miss at " + hitInfo.field);
-            } else {
-                System.out.println("Hit at" + hitInfo.field);
+        if (hitInfo.hitType == HitType.ALREADY_HIT) {
+            Color.yellow("[" + hitInfo.field.getX() + "][" + hitInfo.field.getY() + "]" + " is already hit!");
+            shoot();
+        } else if (hitInfo.hitType == HitType.MISS) {
+            Color.red("Miss at [" + hitInfo.field.getX() + "][" + hitInfo.field.getY() + "]");
+        } else {
+            Color.green("Hit at [" + hitInfo.field.getX() + "][" + hitInfo.field.getY() + "]");
+            playerData.score += hitInfo.score;
 
-                playerData.score += hitInfo.awardedScore;
+            if (opponent.allShipsDestroyed()) {
+                Color.green("Won with score: " + hitInfo.score);
+                Color.yellow("Enemy score: " + network.opponent().score);
+                System.out.println(Strings.CREDITS);
 
-                if (playerData.fleet.allShipsDestroyed()) {
-                    System.out.println("Won with score: " + hitInfo.awardedScore);
-                    System.out.println("Enemy score: " + network.opponent().score);
-                    System.out.println(Strings.CREDITS);
-                    System.exit(0);
-                }
+                //Sending the final results to the opponent
+                playerData.hasWon = true;
+                playerData.score = hitInfo.score;
+                network.sendData(playerData);
+                System.exit(0);
             }
         }
     }
@@ -120,5 +111,50 @@ public class GameStateManager {
         }
         System.out.println("DEBUG: Fleet of the opponent");
         output.render(network.opponent().fleet);
+    }
+
+    private void initializeFleet() {
+        //Initialize ships
+        connect();
+        boolean carrierValid = false;
+        boolean battleShipValid = false;
+        boolean cruiserValid = false;
+        boolean minesweeperValid = false;
+        boolean oilPlatformValid = false;
+
+        output = new Output();
+        fleet = new Fleet();
+
+        Color.purple(Strings.SHIP_TO_BE_PLACED + Strings.CARRIER_DESCRIPTION);
+        while (!carrierValid) {
+            carrierValid = fleet.initCarrier(input.getPosition(), input.getDirection());
+        }
+        output.render(fleet);
+
+//        Color.purple(Strings.SHIP_TO_BE_PLACED + Strings.BATTLESHIP_DESCRIPTION);
+//        while (!battleShipValid) {
+//            battleShipValid = fleet.initBattleShip(input.getPosition(), input.getDirection());
+//        }
+//        output.render(fleet);
+//
+//        Color.purple(Strings.SHIP_TO_BE_PLACED + Strings.CRUISER_DESCRIPTION);
+//        while (!cruiserValid) {
+//            cruiserValid = fleet.initCruiser(input.getPosition(), input.getDirection());
+//        }
+//        output.render(fleet);
+//
+//        Color.purple(Strings.SHIP_TO_BE_PLACED + Strings.MINESWEEPER_DESCRIPTION);
+//        while (!minesweeperValid) {
+//            minesweeperValid = fleet.initMinesweeper(input.getPosition(), input.getDirection());
+//        }
+//        output.render(fleet);
+//
+//        Color.purple(Strings.SHIP_TO_BE_PLACED + Strings.OIL_PLATFORM_DESCRIPTION);
+//        while (!oilPlatformValid) {
+//            oilPlatformValid = fleet.initOilPlatform(input.getPosition(), input.getDirection());
+//        }
+//        output.render(fleet);
+
+        playerData.fleet = fleet;
     }
 }

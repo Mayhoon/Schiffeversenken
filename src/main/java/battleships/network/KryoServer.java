@@ -32,7 +32,7 @@ public class KryoServer extends NetworkEntity {
                 @Override
                 public void received(Connection connection, Object object) {
                     if (object instanceof Data) {
-//                        Color.purple("Data received");
+                        Color.purple("Data received");
                         opponent = (Data) object;
                     }
                 }
