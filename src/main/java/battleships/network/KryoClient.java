@@ -11,12 +11,13 @@ import java.io.IOException;
 public class KryoClient extends NetworkEntity {
     private Client client;
     private Data opponent;
+    private Boolean ignoreFleet = false;
 
     public KryoClient() {
         client = new Client();
         opponent = new Data();
         Kryo kryo = new ClassRegisterer().addClasses(client.getKryo());
-       // kryo.setRegistrationRequired(false);
+        // kryo.setRegistrationRequired(false);
     }
 
     public void start() {
@@ -33,8 +34,15 @@ public class KryoClient extends NetworkEntity {
                 public void received(Connection connection, Object object) {
                     if (object instanceof Data) {
                         Color.purple("Data received");
-                        opponent = (Data) object;
+                        if (ignoreFleet) {
+                            opponent.score = ((Data) object).score;
+                            opponent.hasWon = ((Data) object).hasWon;
+                            opponent.turn = ((Data) object).turn;
+                        } else {
+                            opponent = (Data) object;
+                        }
                     }
+                    ignoreFleet = true;
                 }
 
                 @Override

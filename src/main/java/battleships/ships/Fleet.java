@@ -93,7 +93,6 @@ public class Fleet {
 
     public boolean allShipsDestroyed() {
         boolean hasLost = false;
-
         for (Ship ship : fleet) {
             hasLost = ship.isDestroyed();
         }
@@ -102,10 +101,10 @@ public class Fleet {
 
     public ShotInformation isHit(Field field) {
         Ship hitShip = null;
-        ShotInformation returnInfo;
+        ShotInformation returnInfo = null;
 
         for (Ship ship : fleet) {
-            hitShip = ship.findShipOnLocation(field);
+            hitShip = ship.getShipAtLocation(field);
         }
 
         if (hitShip != null) {

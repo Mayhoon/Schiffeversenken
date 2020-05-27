@@ -11,6 +11,7 @@ import java.io.IOException;
 public class KryoServer extends NetworkEntity {
     private Server server;
     private Data opponent;
+    private Boolean ignoreFleet = false;
 
     public KryoServer() {
         server = new Server();
@@ -33,8 +34,15 @@ public class KryoServer extends NetworkEntity {
                 public void received(Connection connection, Object object) {
                     if (object instanceof Data) {
                         Color.purple("Data received");
-                        opponent = (Data) object;
+                        if (ignoreFleet) {
+                            opponent.score = ((Data) object).score;
+                            opponent.hasWon = ((Data) object).hasWon;
+                            opponent.turn = ((Data) object).turn;
+                        } else {
+                            opponent = (Data) object;
+                        }
                     }
+                    ignoreFleet = true;
                 }
 
                 @Override

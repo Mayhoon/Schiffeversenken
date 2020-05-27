@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ship {
+    public Ship() {
+    }
+
     // Description
     String description = "";
 
@@ -36,23 +39,35 @@ public class Ship {
 
     // Methods
     // Determine Hit
-    public ShotInformation isHit(Field position) {
+    public ShotInformation isHit(Field field) {
         ShotInformation returnInfo = null;
+        boolean alreadyHit = false;
 
-        for (Field f : occupiedCoordinates) {
-            if (f == position) {
-                if (!hitCoordinates.contains(f)) {
-                    hitCoordinates.add(f);
-                    returnInfo = new ShotInformation(HitType.SUCCESS, 0, f, this);
+        for (Field occ : occupiedCoordinates) {
+            if (occ.getX() == field.getX() && occ.getY() == field.getY()) {
+
+                for (Field hitCoord : hitCoordinates) {
+                    if (hitCoord.getX() == occ.getX() && hitCoord.getY() == occ.getY()) {
+                        alreadyHit = true;
+                        returnInfo = new ShotInformation(HitType.ALREADY_HIT, 0, occ, this);
+                    }
+//                    else {
+//                        hitCoordinates.add(occ);
+//                        returnInfo = new ShotInformation(HitType.SUCCESS, 0, occ, this);
+//                        if (this.isDestroyed()) {
+//                            returnInfo.score = this.score;
+//                        }
+//                    }
+                }
+                if (!alreadyHit) {
+                    hitCoordinates.add(occ);
+                    returnInfo = new ShotInformation(HitType.SUCCESS, 0, occ, this);
                     if (this.isDestroyed()) {
                         returnInfo.score = this.score;
                     }
-                } else {
-                    returnInfo = new ShotInformation(HitType.ALREADY_HIT, 0, f, this);
                 }
             }
         }
-
         return returnInfo;
     }
 
@@ -81,7 +96,6 @@ public class Ship {
                 valid = (position.getX()) >= 0 && (position.getY() - (length - 1)) >= 0;
             }
         }
-
         return valid;
     }
 
@@ -100,12 +114,8 @@ public class Ship {
                     return false;
                 }
             }
-
         }
         return true;
-    }
-
-    public Ship() {
     }
 
     // Ship Destroyed Determination
@@ -113,14 +123,12 @@ public class Ship {
         return this.hitCoordinates.containsAll(this.occupiedCoordinates);
     }
 
-    public Ship findShipOnLocation(Field position) {
+    public Ship getShipAtLocation(Field field) {
         Ship hitShip = null;
-
-        for (Field p : occupiedCoordinates) {
-            if (p.getX() == position.getX() && p.getY() == position.getY()) {
-                if (hitCoordinates.contains(p)) {
-                    hitShip = this;
-                }
+        System.out.println("Occupied coords length: " + occupiedCoordinates.size());
+        for (Field position : occupiedCoordinates) {
+            if (position.getX() == field.getX() && position.getY() == field.getY()) {
+                return this;
             }
         }
         return hitShip;

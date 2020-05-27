@@ -28,6 +28,7 @@ public class GameStateManager {
         network = new Network();
         playerData = new Data();
 
+        connect();
         initializeFleet();
 
         //Send ships to opponent
@@ -37,6 +38,8 @@ public class GameStateManager {
         System.out.println("Did your opponent finish his turn?");
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
+
+
         if (input.equals("yes")) {
             output.render(network.opponent().fleet);
             gameLoop();
@@ -44,6 +47,7 @@ public class GameStateManager {
     }
 
     private void gameLoop() {
+        System.out.println("Waiting for thy enemy...");
         while (network.opponent().turn) {
 
         }
@@ -53,6 +57,7 @@ public class GameStateManager {
             System.exit(1);
         } else {
             shoot();
+            output.render(network.opponent().fleet);
             endTurn();
             gameLoop();
         }
@@ -69,7 +74,6 @@ public class GameStateManager {
 
         //Check Hit - Calculate Score - Check if won
         ShotInformation hitInfo = opponent.isHit(field);
-
         if (hitInfo.hitType == HitType.ALREADY_HIT) {
             Color.yellow("[" + hitInfo.field.getX() + "][" + hitInfo.field.getY() + "]" + " is already hit!");
             shoot();
@@ -79,6 +83,7 @@ public class GameStateManager {
             Color.green("Hit at [" + hitInfo.field.getX() + "][" + hitInfo.field.getY() + "]");
             playerData.score += hitInfo.score;
 
+            //Win condition
             if (opponent.allShipsDestroyed()) {
                 Color.green("Won with score: " + hitInfo.score);
                 Color.yellow("Enemy score: " + network.opponent().score);
@@ -95,13 +100,10 @@ public class GameStateManager {
 
     private void connect() {
         networkType = input.networkType();
-
         if (networkType.equals(NetworkType.CLIENT)) {
             input.connectWhenHostReady();
         }
-
         network.connect(networkType);
-        network.sendData(playerData);
     }
 
     private void startGame() {
@@ -115,7 +117,6 @@ public class GameStateManager {
 
     private void initializeFleet() {
         //Initialize ships
-        connect();
         boolean carrierValid = false;
         boolean battleShipValid = false;
         boolean cruiserValid = false;

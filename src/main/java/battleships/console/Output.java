@@ -2,6 +2,7 @@ package battleships.console;
 
 import battleships.ships.Field;
 import battleships.ships.Fleet;
+import battleships.ships.Ship;
 
 public class Output {
     private int Battlefield_width;
