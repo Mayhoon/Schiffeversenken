@@ -3,6 +3,7 @@ package battleships.ships;
 import battleships.enums.HitType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Fleet {
     private ArrayList<Ship> fleet;
@@ -75,6 +76,9 @@ public class Fleet {
         fleet = new ArrayList<Ship>();
     }
 
+    // All Coordinates occupied by a ship
+    List<Field> missedShots = new ArrayList<>();
+
     public boolean isOccupied(Field field) {
         boolean isOccupied = false;
 
@@ -101,7 +105,7 @@ public class Fleet {
 
     public ShotInformation isHit(Field field) {
         Ship hitShip = null;
-        ShotInformation returnInfo = null;
+        ShotInformation returnInfo;
 
         for (Ship ship : fleet) {
             hitShip = ship.getShipAtLocation(field);
@@ -111,8 +115,35 @@ public class Fleet {
             returnInfo = hitShip.isHit(field);
         } else {
             returnInfo = new ShotInformation(HitType.MISS, 0, field, null);
+            missedShots.add(field);
         }
 
         return returnInfo;
+    }
+
+    public HitType fleetRenderHelper(Field field) {
+        HitType hitType = null;
+
+        if (isOccupied(field)) {
+            for (Ship ship : fleet) {
+                Ship hitShip = ship.getShipAtLocation(field);
+                for (Field hitShot : hitShip.hitCoordinates) {
+                    if (hitShot.getX() == field.getX() && hitShot.getY() == field.getY()) {
+                        hitType = HitType.SUCCESS;
+                    } else {
+                        hitType = HitType.NOT_SHOT;
+                    }
+                }
+            }
+        } else {
+            for (Field shot : missedShots) {
+                if (shot.getX() == field.getX() && shot.getY() == field.getY()) {
+                    hitType = HitType.MISS;
+                } else {
+                    hitType = HitType.NOT_SHOT;
+                }
+            }
+        }
+        return hitType;
     }
 }

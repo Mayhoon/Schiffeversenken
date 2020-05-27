@@ -51,13 +51,6 @@ public class Ship {
                         alreadyHit = true;
                         returnInfo = new ShotInformation(HitType.ALREADY_HIT, 0, occ, this);
                     }
-//                    else {
-//                        hitCoordinates.add(occ);
-//                        returnInfo = new ShotInformation(HitType.SUCCESS, 0, occ, this);
-//                        if (this.isDestroyed()) {
-//                            returnInfo.score = this.score;
-//                        }
-//                    }
                 }
                 if (!alreadyHit) {
                     hitCoordinates.add(occ);
