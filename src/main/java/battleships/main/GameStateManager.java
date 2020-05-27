@@ -106,15 +106,6 @@ public class GameStateManager {
         network.connect(networkType);
     }
 
-    private void startGame() {
-        boolean startGame = input.startGame();
-        while (!startGame) {
-            startGame = input.startGame();
-        }
-        System.out.println("DEBUG: Fleet of the opponent");
-        output.render(network.opponent().fleet);
-    }
-
     private void initializeFleet() {
         //Initialize ships
         boolean carrierValid = false;
