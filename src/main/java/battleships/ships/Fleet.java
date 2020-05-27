@@ -136,12 +136,15 @@ public class Fleet {
                 }
             }
         } else {
-            for (Field shot : missedShots) {
-                if (shot.getX() == field.getX() && shot.getY() == field.getY()) {
-                    hitType = HitType.MISS;
-                } else {
-                    hitType = HitType.NOT_SHOT;
+            if (missedShots.size() != 0) {
+                for (Field shot : missedShots) {
+                    if (shot.getX() == field.getX() && shot.getY() == field.getY()) {
+                        hitType = HitType.MISS;
+                        break;
+                    }
                 }
+            } else {
+                hitType = HitType.NOT_SHOT;
             }
         }
         return hitType;
