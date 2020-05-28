@@ -22,20 +22,20 @@ public class Color {
         System.out.println(GREEN + msg + RESET);
     }
 
+    public static void printGreen(String msg) {
+        System.out.print(GREEN + msg + RESET);
+    }
+
     public static void yellow(String msg) {
         System.out.println(YELLOW + msg + RESET);
     }
 
-    public static void blue(String msg) {
-        System.out.println(BLUE + msg + RESET);
+    public static void printYellow(String msg) {
+        System.out.print(YELLOW + msg + RESET);
     }
 
     public static void purple(String msg) {
         System.out.println(PURPLE + msg + RESET);
-    }
-
-    public static void cyan(String msg) {
-        System.out.println(CYAN + msg + RESET);
     }
 
     public static void printCyan(String msg) {

@@ -95,7 +95,7 @@ public class Input {
 
     }
 
-    private Boolean validateInput(Field field) {
+    private boolean validateInput(Field field) {
         if (field.getX() > 9 || field.getX() < 0 || field.getY() > 9 || field.getY() < 0) {
             Color.red("Input out of bounds");
             return false;
@@ -109,15 +109,13 @@ public class Input {
         boolean valid = false;
 
         while (!valid) {
-            System.out.println("Select X position:");
+            System.out.println("X position of your shot:");
             int x = scanner.nextInt();
-            System.out.println("Select Y position:");
+            System.out.println("Y position of your shot:");
             int y = scanner.nextInt();
 
             field = new Field(x, y);
-            if (validateInput(field)) {
-                valid = true;
-            }
+            valid = validateInput(field);
         }
         return field;
     }

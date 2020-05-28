@@ -93,13 +93,18 @@ public class Fleet {
                 return ship.isHit(field);
             }
         }
+
+        for (Field miss : missedShots) {
+            if (miss.getX() == field.getX() && miss.getY() == field.getY()) {
+                return new ShotInformation(HitType.ALREADY_HIT, 0, field, null);
+            }
+        }
         missedShots.add(field);
+
         return new ShotInformation(HitType.MISS, 0, field, null);
     }
 
     public HitType fleetRenderHelper(Field field) {
-        HitType hitType = HitType.NOT_SHOT;
-
         //ship hit on this position
         for (Ship ship : fleet) {
             if (ship.occupiesPosition(field)) {
@@ -114,5 +119,21 @@ public class Fleet {
             }
         }
         return HitType.NOT_SHOT;
+    }
+
+    public boolean initRenderHelper(Field field) {
+        boolean isOccupied = false;
+
+        for (Ship ship : fleet) {
+            for (int c = 0; c < ship.getOccupiedCoordinates().size(); c++) {
+                int posY = ship.getOccupiedCoordinates().get(c).getY();
+                int posX = ship.getOccupiedCoordinates().get(c).getX();
+
+                if (posX == field.getX() && posY == field.getY()) {
+                    isOccupied = true;
+                }
+            }
+        }
+        return isOccupied;
     }
 }

@@ -13,35 +13,35 @@ public class Output {
         Battlefield_width = 10;
     }
 
-    public void render(Fleet fleet) {
+    public void render(Fleet fleet, boolean init) {
         System.out.println("----------------Battleships----------------");
         Color.green("    0   1   2   3   4   5   6   7   8   9");
 
         for (int y = 0; y < Battlefield_height; y++) {
             Color.printCyan(y + "  ");
             for (int x = 0; x < Battlefield_width; x++) {
-
-                HitType hitType = fleet.fleetRenderHelper(new Field(x, y));
-                switch (hitType) {
-                    case MISS:
-                        Color.printCyan("[-] ");
-                        break;
-                    case SUCCESS:
-                        Color.printRed("[X] ");
-                        break;
-                    case NOT_SHOT:
-                        Color.printBlue("[ ] ");
-                        break;
-                    default:
-                        Color.printBlue("[ ] ");
+                if (init) {
+                    if (fleet.initRenderHelper(new Field(x, y))) {
+                        Color.printGreen("[X] ");
+                    } else  {
+                        Color.printBlue("[҈] ");
+                    }
+                } else {
+                    HitType hitType = fleet.fleetRenderHelper(new Field(x, y));
+                    switch (hitType) {
+                        case MISS:
+                            Color.printYellow("[-] ");
+                            break;
+                        case SUCCESS:
+                            Color.printRed("[X] ");
+                            break;
+                        case NOT_SHOT:
+                            Color.printBlue("[҈] ");
+                            break;
+                        default:
+                            Color.printRed("[ ] ");
+                    }
                 }
-
-//                Boolean occupied = fleet.isOccupied(new Field(x, y));
-//                if (occupied == true) {
-//                    System.out.print("[X] ");
-//                } else if (occupied == false) {
-//                    System.out.print("[ ] ");
-//                }
             }
             //New Line
             System.out.println("");

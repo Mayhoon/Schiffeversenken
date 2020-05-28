@@ -4,6 +4,7 @@ import battleships.console.Color;
 import battleships.enums.HitType;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Ship {
@@ -45,7 +46,6 @@ public class Ship {
             }
         }
 
-        System.out.println("Added");
         //Ship has been shot
         hitCoordinates.add(field);
         ShotInformation shotInfo = new ShotInformation(HitType.SUCCESS, 0, field, this);
@@ -104,7 +104,7 @@ public class Ship {
 
     // Ship Destroyed Determination
     public boolean isDestroyed() {
-        return this.hitCoordinates.containsAll(this.occupiedCoordinates);
+        return new HashSet<>(hitCoordinates).equals(new HashSet<>(occupiedCoordinates));
     }
 
     public boolean occupiesPosition(Field field) {

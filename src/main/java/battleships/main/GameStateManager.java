@@ -35,38 +35,36 @@ public class GameStateManager {
         //Send ships to opponent
         network.sendData(playerData);
 
-
         //TODO: Exception handling
         //Render fleet from opponent
-        System.out.println("Did your opponent finish his turn?");
+        System.out.println("Did your opponent finish placing all ships? (yes)");
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
 
         if (input.equals("yes")) {
-            output.render(network.opponent().fleet);
+            output.render(network.opponent().fleet, false);
 
             if (networkType.equals(NetworkType.HOST)) {
                 playerData.turn = true;
                 network.sendData(playerData);
                 shoot();
-                output.render(network.opponent().fleet);
+                output.render(network.opponent().fleet, false);
                 endTurn();
-                gameLoop();
             } else {
                 network.opponent().turn = true;
-                gameLoop();
             }
+            gameLoop();
         }
     }
 
     private void gameLoop() {
-        while (network.opponent().turn == true) {
+        while (network.opponent().turn) {
             try {
-                TimeUnit.SECONDS.sleep(10);
+                TimeUnit.SECONDS.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Waiting...");
+            System.out.println("Waiting for thy enemy...");
         }
         if (network.opponent().hasWon) {
             Color.yellow("Your Opponent has won with a score of: " + network.opponent().score);
@@ -74,7 +72,7 @@ public class GameStateManager {
             System.exit(1);
         } else {
             shoot();
-            output.render(network.opponent().fleet);
+            output.render(network.opponent().fleet, false);
             endTurn();
             gameLoop();
         }
@@ -93,7 +91,7 @@ public class GameStateManager {
         //Check Hit - Calculate Score - Check if won
         ShotInformation hitInfo = opponent.isHit(field);
         if (hitInfo.hitType == HitType.ALREADY_HIT) {
-            Color.yellow("[" + hitInfo.field.getX() + "][" + hitInfo.field.getY() + "]" + " is already hit!");
+            Color.yellow("[" + hitInfo.field.getX() + "][" + hitInfo.field.getY() + "]" + " is already hit! Try again!");
             shoot();
         } else if (hitInfo.hitType == HitType.MISS) {
             Color.red("Miss at [" + hitInfo.field.getX() + "][" + hitInfo.field.getY() + "]");
@@ -139,7 +137,7 @@ public class GameStateManager {
         while (!carrierValid) {
             carrierValid = fleet.initCarrier(input.getPosition(), input.getDirection());
         }
-        output.render(fleet);
+        output.render(fleet, true);
 
 //        Color.purple(Strings.SHIP_TO_BE_PLACED + Strings.BATTLESHIP_DESCRIPTION);
 //        while (!battleShipValid) {
