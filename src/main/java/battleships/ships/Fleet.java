@@ -79,22 +79,6 @@ public class Fleet {
     // All Coordinates occupied by a ship
     List<Field> missedShots = new ArrayList<>();
 
-    public boolean isOccupied(Field field) {
-        boolean isOccupied = false;
-
-        for (Ship ship : fleet) {
-            for (int c = 0; c < ship.getOccupiedCoordinates().size(); c++) {
-                int posY = ship.getOccupiedCoordinates().get(c).getY();
-                int posX = ship.getOccupiedCoordinates().get(c).getX();
-
-                if (posX == field.getX() && posY == field.getY()) {
-                    isOccupied = true;
-                }
-            }
-        }
-        return isOccupied;
-    }
-
     public boolean allShipsDestroyed() {
         boolean hasLost = false;
         for (Ship ship : fleet) {
@@ -104,49 +88,31 @@ public class Fleet {
     }
 
     public ShotInformation isHit(Field field) {
-        Ship hitShip = null;
-        ShotInformation returnInfo;
-
         for (Ship ship : fleet) {
-            hitShip = ship.getShipAtLocation(field);
+            if (ship.occupiesPosition(field)) {
+                return ship.isHit(field);
+            }
         }
-
-        if (hitShip != null) {
-            returnInfo = hitShip.isHit(field);
-        } else {
-            returnInfo = new ShotInformation(HitType.MISS, 0, field, null);
-            missedShots.add(field);
-        }
-
-        return returnInfo;
+        missedShots.add(field);
+        return new ShotInformation(HitType.MISS, 0, field, null);
     }
 
     public HitType fleetRenderHelper(Field field) {
-        HitType hitType = null;
+        HitType hitType = HitType.NOT_SHOT;
 
-        if (isOccupied(field)) {
-            for (Ship ship : fleet) {
-                Ship hitShip = ship.getShipAtLocation(field);
-                for (Field hitShot : hitShip.hitCoordinates) {
-                    if (hitShot.getX() == field.getX() && hitShot.getY() == field.getY()) {
-                        hitType = HitType.SUCCESS;
-                    } else {
-                        hitType = HitType.NOT_SHOT;
-                    }
-                }
-            }
-        } else {
-            if (missedShots.size() != 0) {
-                for (Field shot : missedShots) {
-                    if (shot.getX() == field.getX() && shot.getY() == field.getY()) {
-                        hitType = HitType.MISS;
-                        break;
-                    }
-                }
-            } else {
-                hitType = HitType.NOT_SHOT;
+        //ship hit on this position
+        for (Ship ship : fleet) {
+            if (ship.occupiesPosition(field)) {
+                return ship.isVisibleForPlayer(field);
             }
         }
-        return hitType;
+
+        //Missed ship, shot in the water
+        for (Field shot : missedShots) {
+            if (shot.getX() == field.getX() && shot.getY() == field.getY()) {
+                return HitType.MISS;
+            }
+        }
+        return HitType.NOT_SHOT;
     }
 }

@@ -13,6 +13,7 @@ import battleships.ships.Fleet;
 import battleships.ships.ShotInformation;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class GameStateManager {
     private Input input;
@@ -34,22 +35,38 @@ public class GameStateManager {
         //Send ships to opponent
         network.sendData(playerData);
 
+
+        //TODO: Exception handling
         //Render fleet from opponent
         System.out.println("Did your opponent finish his turn?");
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
 
-
         if (input.equals("yes")) {
             output.render(network.opponent().fleet);
-            gameLoop();
+
+            if (networkType.equals(NetworkType.HOST)) {
+                playerData.turn = true;
+                network.sendData(playerData);
+                shoot();
+                output.render(network.opponent().fleet);
+                endTurn();
+                gameLoop();
+            } else {
+                network.opponent().turn = true;
+                gameLoop();
+            }
         }
     }
 
     private void gameLoop() {
-        System.out.println("Waiting for thy enemy...");
-        while (network.opponent().turn) {
-
+        while (network.opponent().turn == true) {
+            try {
+                TimeUnit.SECONDS.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Waiting...");
         }
         if (network.opponent().hasWon) {
             Color.yellow("Your Opponent has won with a score of: " + network.opponent().score);
@@ -64,8 +81,9 @@ public class GameStateManager {
     }
 
     private void endTurn() {
-        network.sendData(playerData);
         playerData.turn = false;
+        network.opponent().turn = true;
+        network.sendData(playerData);
     }
 
     private void shoot() {

@@ -31,8 +31,9 @@ public class Output {
                         break;
                     case NOT_SHOT:
                         Color.printBlue("[ ] ");
-                        break;//BLUE
+                        break;
                     default:
+                        Color.printBlue("[ ] ");
                 }
 
 //                Boolean occupied = fleet.isOccupied(new Field(x, y));

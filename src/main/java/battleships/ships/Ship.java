@@ -37,31 +37,22 @@ public class Ship {
         return occupiedCoordinates;
     }
 
-    // Methods
-    // Determine Hit
     public ShotInformation isHit(Field field) {
-        ShotInformation returnInfo = null;
-        boolean alreadyHit = false;
-
-        for (Field occ : occupiedCoordinates) {
-            if (occ.getX() == field.getX() && occ.getY() == field.getY()) {
-
-                for (Field hitCoord : hitCoordinates) {
-                    if (hitCoord.getX() == occ.getX() && hitCoord.getY() == occ.getY()) {
-                        alreadyHit = true;
-                        returnInfo = new ShotInformation(HitType.ALREADY_HIT, 0, occ, this);
-                    }
-                }
-                if (!alreadyHit) {
-                    hitCoordinates.add(occ);
-                    returnInfo = new ShotInformation(HitType.SUCCESS, 0, occ, this);
-                    if (this.isDestroyed()) {
-                        returnInfo.score = this.score;
-                    }
-                }
+        //Check if the ship is already shot at the given position
+        for (Field hitCoord : hitCoordinates) {
+            if (hitCoord.getX() == field.getX() && hitCoord.getY() == field.getY()) {
+                return new ShotInformation(HitType.ALREADY_HIT, 0, field, this);
             }
         }
-        return returnInfo;
+
+        System.out.println("Added");
+        //Ship has been shot
+        hitCoordinates.add(field);
+        ShotInformation shotInfo = new ShotInformation(HitType.SUCCESS, 0, field, this);
+        if (this.isDestroyed()) {
+            shotInfo.score = this.score;
+        }
+        return shotInfo;
     }
 
     // Set Coordinates
@@ -116,14 +107,21 @@ public class Ship {
         return this.hitCoordinates.containsAll(this.occupiedCoordinates);
     }
 
-    public Ship getShipAtLocation(Field field) {
-        Ship hitShip = null;
-        System.out.println("Occupied coords length: " + occupiedCoordinates.size());
-        for (Field position : occupiedCoordinates) {
-            if (position.getX() == field.getX() && position.getY() == field.getY()) {
-                return this;
+    public boolean occupiesPosition(Field field) {
+        for (Field occupiedCord : occupiedCoordinates) {
+            if (occupiedCord.getX() == field.getX() && occupiedCord.getY() == field.getY()) {
+                return true;
             }
         }
-        return hitShip;
+        return false;
+    }
+
+    public HitType isVisibleForPlayer(Field field) {
+        for (Field hit : hitCoordinates) {
+            if (field.getX() == hit.getX() && field.getY() == hit.getY()) {
+                return HitType.SUCCESS;
+            }
+        }
+        return HitType.NOT_SHOT;
     }
 }
