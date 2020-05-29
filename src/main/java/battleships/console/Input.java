@@ -21,7 +21,7 @@ public class Input {
         Color.printCyan("(v)");
         System.out.println(" vertical: from bottom to top");
 
-        Boolean horizontal = false;
+        boolean horizontal = false;
         String input = scanner.next();
 
         if (input.equals("h")) {

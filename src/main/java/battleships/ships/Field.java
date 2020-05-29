@@ -1,16 +1,11 @@
 package battleships.ships;
 
-import battleships.enums.HitType;
-
 public class Field {
     // X-Coordinate
     private int x;
 
     // Y-Coordinate
     private int y;
-
-    // Hit?
-    private HitType isHit = HitType.NOT_SHOT;
 
     // Getter/Setter
     public int getX() {

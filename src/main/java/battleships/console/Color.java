@@ -8,7 +8,6 @@ public class Color {
     private static final String BLUE = "\u001B[34m";
     private static final String PURPLE = "\u001B[35m";
     private static final String CYAN = "\u001B[36m";
-    private static final String WHITE = "\u001B[37m";
 
     public static void red(String msg) {
         System.out.println(RED + msg + RESET);

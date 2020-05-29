@@ -10,7 +10,7 @@ public class Game {
 
     private GameStateManager gameStateManager;
 
-    public Game() throws Exception {
+    public Game() {
         Color.blue(Strings.BANNER);
         gameStateManager = new GameStateManager();
     }

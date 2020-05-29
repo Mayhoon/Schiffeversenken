@@ -7,7 +7,6 @@ import battleships.ships.*;
 import com.esotericsoftware.kryo.Kryo;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 //Classes that the server and client have to serialize.
 public class ClassRegisterer {

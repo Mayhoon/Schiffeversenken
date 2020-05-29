@@ -12,7 +12,6 @@ import battleships.ships.Field;
 import battleships.ships.Fleet;
 import battleships.ships.ShotInformation;
 
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class GameStateManager {
@@ -20,7 +19,6 @@ public class GameStateManager {
     private Data playerData;
     private Network network;
     private Output output;
-    private Scanner scanner;
     private NetworkType networkType;
     private Fleet fleet;
 

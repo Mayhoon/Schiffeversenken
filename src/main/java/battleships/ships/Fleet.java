@@ -131,6 +131,7 @@ public class Fleet {
 
                 if (posX == field.getX() && posY == field.getY()) {
                     isOccupied = true;
+                    break;
                 }
             }
         }

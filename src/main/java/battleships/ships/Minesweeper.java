@@ -11,6 +11,7 @@ public class Minesweeper extends Ship {
         setCoordinates(horizontal, field);
     }
 
+    // Is need for Kryo Serialization
     public Minesweeper() {
         
     }

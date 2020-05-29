@@ -10,6 +10,7 @@ public class OilPlatform extends Ship {
         this.setCoordinates(isHorizontal, field);
     }
 
+    // Is need for Kryo Serialization
     public OilPlatform () {
 
     }
