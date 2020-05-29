@@ -1,13 +1,11 @@
 package battleships.console;
 
 import battleships.enums.NetworkType;
-import battleships.network.Network;
 import battleships.ships.Field;
 
 import java.util.Scanner;
 
 public class Input {
-    final String INVALID_PLACEMENT_RANGE_EXCEPTION_CAUSE = "Your Ship must be placed within the Battlefield!";
     private Scanner scanner;
 
     public Input() {
@@ -16,8 +14,12 @@ public class Input {
 
     public boolean getDirection() {
         System.out.println("Direction of the ship:");
-        System.out.println("(v) vertical: from bottom to top");
-        System.out.println("(h) horizontal: from left to right ");
+
+        Color.printGreen("(h)");
+        System.out.println(" horizontal: from left to right ");
+
+        Color.printCyan("(v)");
+        System.out.println(" vertical: from bottom to top");
 
         Boolean horizontal = false;
         String input = scanner.next();
@@ -36,10 +38,12 @@ public class Input {
 
         while (!valid) {
             try {
-                System.out.println("X position of the ship:");
+                Color.printGreen("X");
+                System.out.println(" position of the ship:");
                 field.setX(scanner.nextInt());
 
-                System.out.println("Y position of the ship:");
+                Color.printCyan("Y");
+                System.out.println(" position of the ship:");
                 field.setY(scanner.nextInt());
 
                 if (validateInput(field)) {
@@ -84,15 +88,6 @@ public class Input {
         Color.yellow("https://www.whatismyip.com/what-is-my-public-ip-address/");
         Color.yellow("When the host is within the same network, type in localhost");
         return scanner.next();
-    }
-
-    public void connectWhenHostReady() {
-        System.out.println("Type start when the host has opened the connection.");
-        String input = scanner.next();
-        while (!input.equals("start")) {
-            input = scanner.next();
-        }
-
     }
 
     private boolean validateInput(Field field) {

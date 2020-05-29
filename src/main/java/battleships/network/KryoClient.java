@@ -1,6 +1,5 @@
 package battleships.network;
 
-import battleships.console.Color;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -9,17 +8,16 @@ import com.esotericsoftware.kryonet.Listener;
 import java.io.IOException;
 
 public class KryoClient extends NetworkEntity {
+    private String ip;
     private Client client;
     private Data opponent;
     private Boolean ignoreFleet = false;
-    private String ip;
 
     public KryoClient(String ip) {
         this.ip = ip;
         client = new Client();
         opponent = new Data();
         Kryo kryo = new ClassRegisterer().addClasses(client.getKryo());
-        // kryo.setRegistrationRequired(false);
     }
 
     public void start() {

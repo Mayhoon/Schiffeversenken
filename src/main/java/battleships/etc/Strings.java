@@ -1,6 +1,11 @@
 package battleships.etc;
 
 public class Strings {
+    public static final String FOOTER = "-------------------------------------------";
+    public static final String HEADER_SETUP = "-------------------";
+    public static final String HEADER_SETUP_TAG = "Setup";
+    public static final String HEADER_BATTLE = "-------------------Battle------------------";
+    public static final String X_COORDINATES = "    0   1   2   3   4   5   6   7   8   9";
     public static final String SHIP_TO_BE_PLACED = "Place your: ";
     public static final String CARRIER_DESCRIPTION = "Carrier: ";
     public static final String CARRIER_FORM = "[X][X][X][X][X][X]";

@@ -1,6 +1,7 @@
 package battleships.console;
 
 import battleships.enums.HitType;
+import battleships.etc.Strings;
 import battleships.ships.Field;
 import battleships.ships.Fleet;
 
@@ -15,11 +16,13 @@ public class Output {
 
     public void render(Fleet fleet, boolean init) {
         if (init) {
-            Color.yellow("-------------------Setup-------------------");
+            System.out.print(Strings.HEADER_SETUP);
+            Color.printYellow(Strings.HEADER_SETUP_TAG);
+            System.out.println(Strings.HEADER_SETUP);
         } else {
-            System.out.println("-------------------Battle------------------");
+            System.out.println(Strings.HEADER_BATTLE);
         }
-        Color.green("    0   1   2   3   4   5   6   7   8   9");
+        Color.green(Strings.X_COORDINATES);
 
         for (int y = 0; y < Battlefield_height; y++) {
             Color.printCyan(y + "  ");
@@ -50,8 +53,6 @@ public class Output {
             //New Line
             System.out.println("");
         }
-        System.out.println("-------------------------------------------");
+        System.out.println(Strings.FOOTER);
     }
-
-
 }
