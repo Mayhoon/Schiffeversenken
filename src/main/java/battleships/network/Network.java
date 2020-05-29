@@ -8,9 +8,9 @@ public class Network {
     public Network() {
     }
 
-    public void connect(NetworkType networkType) {
+    public void connect(NetworkType networkType, String ip) {
         if (networkType.equals(NetworkType.CLIENT)) {
-            networkEntity = new KryoClient();
+            networkEntity = new KryoClient(ip);
             networkEntity.start();
         } else if (networkType.equals(NetworkType.HOST)) {
             networkEntity = new KryoServer();

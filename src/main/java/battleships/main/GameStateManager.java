@@ -35,7 +35,6 @@ public class GameStateManager {
         //Send ships to opponent
         network.sendData(playerData);
 
-        //TODO: Exception handling
         //Render fleet from opponent
         System.out.println("Waiting for your opponent");
         while (network.opponent().fleet == null) {
@@ -72,6 +71,7 @@ public class GameStateManager {
             System.out.println(".");
         }
         if (network.opponent().hasWon) {
+            output.render(network.opponent().fleet, false);
             Color.yellow("Your Opponent has won with a score of: " + network.opponent().score);
             Color.green("Your score: " + playerData.score);
             System.out.println(Strings.CREDITS);
@@ -107,6 +107,7 @@ public class GameStateManager {
 
             //Win condition
             if (opponent.allShipsDestroyed()) {
+                output.render(network.opponent().fleet, false);
                 Color.green("Won with score: " + hitInfo.score);
                 Color.yellow("Enemy score: " + network.opponent().score);
                 System.out.println(Strings.CREDITS);
@@ -115,6 +116,7 @@ public class GameStateManager {
                 playerData.hasWon = true;
                 playerData.score = hitInfo.score;
                 endTurn();
+
 
                 try {
                     TimeUnit.SECONDS.sleep(5);
@@ -128,10 +130,11 @@ public class GameStateManager {
 
     private void connect() {
         networkType = input.networkType();
-        if (networkType.equals(NetworkType.CLIENT)) {
-            input.connectWhenHostReady();
+        if(networkType.equals(NetworkType.CLIENT)) {
+            network.connect(networkType, input.getIp());
+        }else {
+            network.connect(networkType, "");
         }
-        network.connect(networkType);
     }
 
     private void initializeFleet() {

@@ -12,8 +12,10 @@ public class KryoClient extends NetworkEntity {
     private Client client;
     private Data opponent;
     private Boolean ignoreFleet = false;
+    private String ip;
 
-    public KryoClient() {
+    public KryoClient(String ip) {
+        this.ip = ip;
         client = new Client();
         opponent = new Data();
         Kryo kryo = new ClassRegisterer().addClasses(client.getKryo());
@@ -23,7 +25,7 @@ public class KryoClient extends NetworkEntity {
     public void start() {
         try {
             client.start();
-            client.connect(5000, "localhost", 54555, 54777);
+            client.connect(5000, ip, 54555, 54777);
             client.addListener(new Listener.ThreadedListener(new Listener() {
 
                 @Override

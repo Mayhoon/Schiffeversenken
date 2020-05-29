@@ -1,6 +1,7 @@
 package battleships.console;
 
 import battleships.enums.NetworkType;
+import battleships.network.Network;
 import battleships.ships.Field;
 
 import java.util.Scanner;
@@ -75,6 +76,14 @@ public class Input {
             }
         }
         return networkType;
+    }
+
+    public String getIp() {
+        Color.red("IP of the server:");
+        Color.yellow("Connect over the internet with the hosts external ip address.");
+        Color.yellow("https://www.whatismyip.com/what-is-my-public-ip-address/");
+        Color.yellow("When the host is within the same network, type in localhost");
+        return scanner.next();
     }
 
     public void connectWhenHostReady() {
