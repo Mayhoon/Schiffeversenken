@@ -4,6 +4,7 @@ public class OilPlatform extends Ship {
     public OilPlatform(Field field, boolean horizontal) {
         description = "Oil Platform";
         length = 2;
+        score = length * 2;
         width = 2;
         isHorizontal = horizontal;
         this.setCoordinates(isHorizontal, field);

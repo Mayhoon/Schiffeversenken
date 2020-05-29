@@ -14,7 +14,11 @@ public class Output {
     }
 
     public void render(Fleet fleet, boolean init) {
-        System.out.println("----------------Battleships----------------");
+        if (init) {
+            Color.yellow("-------------------Setup-------------------");
+        } else {
+            System.out.println("-------------------Battle------------------");
+        }
         Color.green("    0   1   2   3   4   5   6   7   8   9");
 
         for (int y = 0; y < Battlefield_height; y++) {
@@ -23,8 +27,8 @@ public class Output {
                 if (init) {
                     if (fleet.initRenderHelper(new Field(x, y))) {
                         Color.printGreen("[X] ");
-                    } else  {
-                        Color.printBlue("[҈] ");
+                    } else {
+                        Color.printBlue("[ ] ");
                     }
                 } else {
                     HitType hitType = fleet.fleetRenderHelper(new Field(x, y));
@@ -36,7 +40,7 @@ public class Output {
                             Color.printRed("[X] ");
                             break;
                         case NOT_SHOT:
-                            Color.printBlue("[҈] ");
+                            Color.printBlue("[ ] ");
                             break;
                         default:
                             Color.printRed("[ ] ");

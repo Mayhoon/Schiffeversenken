@@ -5,6 +5,7 @@ public class Cruiser extends Ship {
     public Cruiser(Field field, boolean horizontal) {
         description = "Cruiser";
         length = 4;
+        score = length;
         width = 1;
         isHorizontal = horizontal;
         setCoordinates(horizontal, field);

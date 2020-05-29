@@ -5,6 +5,7 @@ public class Minesweeper extends Ship {
     public Minesweeper(Field field, boolean horizontal) {
         description = "Minesweeper";
         length = 3;
+        score = length;
         width = 1;
         isHorizontal = horizontal;
         setCoordinates(horizontal, field);

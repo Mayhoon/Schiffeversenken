@@ -4,7 +4,6 @@ import battleships.console.Color;
 import battleships.enums.HitType;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class Ship {
@@ -80,6 +79,9 @@ public class Ship {
                 valid = (position.getX()) >= 0 && (position.getY() - (length - 1)) >= 0;
             }
         }
+        if (!valid) {
+            Color.red("Ship would be out of bounds! Try again:");
+        }
         return valid;
     }
 
@@ -95,6 +97,7 @@ public class Ship {
             for (Field occ : occupiedCoordinates) {
                 if (field.getX() == occ.getX() && field.getY() == occ.getY()) {
                     Color.red("One or more of the designated coordinates are already in use!");
+                    Color.red("Try again:");
                     return false;
                 }
             }
@@ -104,7 +107,7 @@ public class Ship {
 
     // Ship Destroyed Determination
     public boolean isDestroyed() {
-        return new HashSet<>(hitCoordinates).equals(new HashSet<>(occupiedCoordinates));
+        return hitCoordinates.size() == occupiedCoordinates.size();
     }
 
     public boolean occupiesPosition(Field field) {

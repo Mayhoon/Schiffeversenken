@@ -5,6 +5,7 @@ public class Battleship extends Ship {
     public Battleship(Field field, boolean horizontal) {
         description = "Battleship";
         length = 5;
+        score = length;
         width = 1;
         isHorizontal = horizontal;
         setCoordinates(horizontal, field);

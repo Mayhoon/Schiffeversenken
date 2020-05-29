@@ -33,15 +33,11 @@ public class KryoClient extends NetworkEntity {
                 @Override
                 public void received(Connection connection, Object object) {
                     if (object instanceof Data) {
-                        Color.purple("Data received");
                         if (ignoreFleet) {
-                            Color.purple("Mein erstes Mal <3");
-                            System.out.println("");
                             opponent.score = ((Data) object).score;
                             opponent.hasWon = ((Data) object).hasWon;
                             opponent.turn = ((Data) object).turn;
                         } else {
-                            Color.purple("ganz ueberschrieben");
                             opponent = (Data) object;
                         }
                         ignoreFleet = true;

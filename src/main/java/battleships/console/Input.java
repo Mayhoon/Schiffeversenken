@@ -15,7 +15,8 @@ public class Input {
 
     public boolean getDirection() {
         System.out.println("Direction of the ship:");
-        System.out.println("horizontal (h) / vertical (v)");
+        System.out.println("(v) vertical: from bottom to top");
+        System.out.println("(h) horizontal: from left to right ");
 
         Boolean horizontal = false;
         String input = scanner.next();
@@ -76,16 +77,6 @@ public class Input {
         return networkType;
     }
 
-    public boolean startGame() {
-        System.out.println("Type start if your opponent is ready.");
-        String input = scanner.next();
-        if (input.equals("start")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public void connectWhenHostReady() {
         System.out.println("Type start when the host has opened the connection.");
         String input = scanner.next();
@@ -97,7 +88,7 @@ public class Input {
 
     private boolean validateInput(Field field) {
         if (field.getX() > 9 || field.getX() < 0 || field.getY() > 9 || field.getY() < 0) {
-            Color.red("Input out of bounds");
+            Color.red("Coordinate is not contained in battlefield! Try again:");
             return false;
         } else {
             return true;

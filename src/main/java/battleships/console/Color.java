@@ -42,7 +42,15 @@ public class Color {
         System.out.print(CYAN + msg + RESET);
     }
 
+    public static void cyan(String msg) {
+        System.out.println(CYAN + msg + RESET);
+    }
+
     public static void printBlue(String msg) {
         System.out.print(BLUE + msg + RESET);
+    }
+
+    public static void blue(String msg) {
+        System.out.println(BLUE + msg + RESET);
     }
 }
